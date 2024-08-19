@@ -1,24 +1,29 @@
+/* eslint-disable no-unused-vars */
 import logo from './logo.svg';
 import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import Navbar from './Components/Navbar';
+import Layout from './Components/Layout';
+import Home from './Components/Home';
+import ToDoList from './Components/ToDoList';
+import SendPasswordResetEmail from './Components/SendPasswordResetEmail';
+import ResetPassword from './Components/ResetPassword';
+import Contests from './Components/Contests';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+      <Route path='/' element={<Layout/>} >
+        <Route index element={<Home/>}/>
+        <Route path='todolist' element={<ToDoList/>}/>
+        <Route path='contests' element={<Contests/>}/>
+      </Route>
+      <Route path='/sendpasswordresetemail' element={<SendPasswordResetEmail/>}/>
+      <Route path='/resetpassword' element={<ResetPassword/>}/>
+    </Routes>
+    </>
+    
   );
 }
 
