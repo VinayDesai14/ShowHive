@@ -1,0 +1,30 @@
+.modal-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: red;
+  }
+  
+  .modal-icon-facebook {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: rgb(18, 139, 245);
+  }
+  
+  .modal-text {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    text-align: center; /* Ensure text is centered */
+  }
+  
+  .d-grid {
+    margin-top: 1.5rem;
+  }
