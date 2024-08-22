@@ -26,5 +26,27 @@
   }
   
   .d-grid {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
+    gap:14rem;
+    border: 0.1rem solid black !important;
+    border-radius: 7px !important;
   }
+
+  .d-grid:hover{
+    border: 0px !important;
+  }
+
+  .btn-custom{
+    color: white !important;
+    background-color: rgba(244, 53, 53, 0.943) !important;
+} 
+
+ .btn-custom:hover{
+    background-color: rgba(225, 25, 25, 0.961) !important;
+}
+
+.modal-para {
+    margin-top: 4rem ;
+    display: flex;
+    justify-content: center;
+}

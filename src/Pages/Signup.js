@@ -50,10 +50,13 @@ function MyVerticallyCenteredModal(props) {
                         </span>
                     </Button>
                 </div>
+
+             <div className='modal-para'>
+                <p>
+                I agree to the Terms & Conditions & Privacy Policy
+                </p>
+             </div>
             </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer>
         </Modal>
     );
 }
@@ -63,8 +66,8 @@ const Signup = () => {
 
     return (
         <>
-            <Button variant="primary" onClick={() => setModalShow(true)}>
-                Launch vertically centered modal
+            <Button className='btn-custom' variant="light" onClick={() => setModalShow(true)}>
+                Signup
             </Button>
 
             <MyVerticallyCenteredModal

@@ -1,9 +1,9 @@
 import React from 'react'
-import CardWebsite from '../Components/CardWebsite';
+import Navbar from '../Components/Navbar'
 const Home = () => {
   return (
     <div>
-      <CardWebsite/>
+        <Navbar/>
     </div>
   )
 }
