@@ -1,0 +1,66 @@
+.navbar {
+    height: 4rem;
+    background-color: rgb(239, 237, 237);
+    font-size: large;
+    padding: 0; 
+}
+
+.navbar-brand {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+
+}
+
+.navbar-toggler {
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 1 !important;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center !important;
+    gap: 4rem;
+}
+
+#basic-navbar-nav {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    column-gap: 2rem;
+}
+
+.me-auto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2rem;
+}
+
+.ms-auto {
+    margin-left: auto; /* This pushes the signup button to the right */
+}
+
+/* Example media query for small screens */
+@media (max-width: 992px) {
+    #basic-navbar-nav {
+        flex-direction: column;
+    }
+
+    .me-auto {
+        justify-content: center;
+    }
+
+    .signup-btn {
+        margin-left: 0; /* Reset margin on small screens */
+        /* Adjust as needed */
+    }
+
+    .ms-auto {
+        margin-top: 2rem;
+    }
+}
