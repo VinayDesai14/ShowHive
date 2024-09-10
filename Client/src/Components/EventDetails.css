@@ -1,0 +1,10 @@
+.eventContainer{
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.row{
+    row-gap: 2rem;
+}

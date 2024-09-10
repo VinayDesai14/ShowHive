@@ -7,7 +7,7 @@ import Signup from '../Pages/Signup';
 
 const NavbarComp = () => {
   return (
-    <Navbar expand="lg" className="bg-body-tertiary navbar">
+    <Navbar expand="lg">
       <Container>
         <Navbar.Brand href="#home" className="d-flex align-items-center">BookMyShow</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="navbar-toggler" />
