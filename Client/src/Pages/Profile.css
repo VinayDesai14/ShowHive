@@ -1,0 +1,112 @@
+.profileCont{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    gap:2rem;
+    background-color: rgb(240, 239, 239);
+}
+.personalDetails,.accDetails{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    font-size: larger;
+    background-color: rgb(255, 255, 255);
+    padding: 3rem;
+    gap:2rem;
+    border-radius: 0.2rem;
+}
+
+.personalDetails input[type="text"]{
+    background-color: transparent;
+    border: 0.1rem solid black;
+    width: 45rem;
+    border-radius: 16px;
+    padding: 0.3rem;
+    margin-left: 3rem;
+    padding-left: 0.8rem !important;
+    &::placeholder{
+        padding: 0.1rem;
+    }
+}
+
+.profileSec{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+    gap:1rem;
+}
+
+.profileCard{
+    border: 0px !important;
+}
+
+.profileCard label{
+    cursor: pointer;
+}
+
+.profileImage{
+    width:10rem !important;
+    height: 10rem !important;
+    border-radius: 50% !important;
+}
+
+.personalDetails input[type="date"]{
+    background-color: transparent;
+    border: 0.1rem solid black;
+    width: 45rem;
+    border-radius: 16px;
+    padding: 0.3rem;
+    margin-left: 3rem;
+    &::placeholder{
+        padding: 0.5rem;
+    }
+}
+.personalDetails input[type="radio"]{
+    background-color: transparent;
+    border: 0.1rem solid black;
+    height: 1.2rem;
+    width: 2rem;
+    padding: 1rem;
+    cursor: pointer;
+}
+#gender{
+    margin-left: 4rem;
+}
+#maritalStatus{
+    margin-left: 1rem;
+}
+@media(max-width:1380px){
+    .personalDetails input[type="text"]{
+        width:30rem;
+        margin-left: 2rem;
+    }
+}
+@media(max-width:1000px){
+    .personalDetails input[type="text"]{
+        width:23rem;
+        margin-left: 2rem;
+    }
+}
+@media(max-width:700px){
+    .personalDetails input[type="text"]{
+        width:18rem;
+        margin-left: 1rem;
+    }
+}
+@media(max-width:520px){
+    .personalDetails input[type="text"]{
+        width:12rem;
+        margin-left: 1rem;
+    }
+}
+@media(max-width:320px){
+    .personalDetails input[type="text"]{
+        width:6rem;
+        margin-left: 0.1rem;
+    }
+}

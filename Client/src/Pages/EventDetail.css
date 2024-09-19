@@ -1,0 +1,104 @@
+.eventCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(240, 239, 239);
+}
+
+.eventDetails{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    gap:2rem;
+    font-size: large;
+    background-color: white;
+}
+
+.eventInput{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:1rem;
+}
+
+.eventInput label{
+    width: 15rem;
+    margin-left: 1rem;
+}
+
+.eventInput Input{
+    width: 35rem;
+    padding: 0.2rem;
+    border: 0.1rem solid black;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    &::placeholder{
+        padding: 0.1rem;
+    }
+}
+
+.eventInput select{
+    width: 35rem;
+    padding: 0.2rem;
+    border-radius: 1rem;
+    padding-left: 1rem;
+    &::placeholder{
+        padding: 0.1rem;
+    }
+}
+
+@media(max-width:1380px){
+    .eventInput input{
+        width:20rem;
+    }
+    .eventInput select{
+        width:20rem;
+    }
+    .eventInput{
+        gap:0rem;
+    }
+}
+@media(max-width:1000px){
+    .eventInput input{
+        width:12rem;
+    }
+    .eventInput select{
+        width:12rem;
+    }
+    .eventInput{
+        gap:0rem;
+    }
+}
+@media(max-width:700px){
+    .eventInput input{
+        width:10rem;
+    }
+    .eventInput select{
+        width:10rem;
+    }
+    .eventInput{
+        gap:0rem;
+    }
+}
+@media(max-width:520px){
+    .eventInput input{
+        width:6rem;
+    }
+    .eventInput select{
+        width:6rem;
+    }
+    .eventInput{
+        gap:0rem;
+    }
+}
+@media(max-width:320px){
+    .eventInput input{
+        width:5rem;
+    }
+    .eventInput select{
+        width:5rem;
+    }
+    .eventInput{
+        gap:0rem;
+    }
+}
