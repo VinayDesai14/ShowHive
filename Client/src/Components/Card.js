@@ -1,12 +1,11 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
-import GFG from '../Assests/Images/gfg.jpeg';
 import './Card.css';
 const CardComp = () => {
   return (
     <div>
         <Card className='cards'>
-        <Card.Img variant="top" src={GFG} />
+        <Card.Img variant="top" />
         <Card.Body>
             <Card.Title>Card Title</Card.Title>
             <Card.Text>Location:

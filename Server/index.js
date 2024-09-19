@@ -11,7 +11,7 @@ const profileRoutes=require("./routes/Profile");
 require('dotenv').config();
 const database=require('./config/database');
 const {cloudinaryConnect}=require('./config/cloudinary');
-const Port=process.env.PORT || 3000;
+const Port=process.env.PORT || 8000;
 
 database.connect();
 cloudinaryConnect();
