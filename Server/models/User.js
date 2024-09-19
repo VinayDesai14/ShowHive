@@ -6,12 +6,6 @@ const userSchema= new mongoose.Schema({
         required:true,
         max:50
     },
-    password:{
-        type:String,
-        required:true,
-        min:8,
-        max:50
-    },
     profileDetails:{
         type:mongoose.Schema.Types.ObjectId,
         ref:"Profile",
@@ -19,7 +13,11 @@ const userSchema= new mongoose.Schema({
     },
     image:{
         type:String,
-    }
+    },
+    eventDetails:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"eventDetails",
+    }]
 })
 
 module.exports = mongoose.model("User", userSchema);

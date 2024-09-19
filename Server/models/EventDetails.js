@@ -33,6 +33,19 @@ const eventDetailsSchema=new mongoose.Schema({
         type:String,
         required:true
      },
+     category:{
+      type:String,
+      required:true,
+      enum:["Events","Music","Plays","Sports"]
+     },
+     type:{
+      type:String,
+      required:true
+     },
+     seats:{
+      type:String,
+      required:true
+     }
 });
 
 module.exports = mongoose.model("eventDetails", eventDetailsSchema);

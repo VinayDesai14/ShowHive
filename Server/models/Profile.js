@@ -12,18 +12,18 @@ const ProfileSchema=new mongoose.Schema({
     },
     gender:{
         type : String,
-        enum:["Man","Woman","Others"]
+        enum:["Male","Female","Others"]
     },
     maritalStatus:{
         type:String,
         enum: ["Single","Married"]
     },
-    language:{
-        type:String,
-        set:["English","Hindi","Marathi","Gujrati","Punjabi","Bhojpuri",
-             "Bengali","Oriya","Telugu","Kannada","Malayalam","Tamil",
-             "Urdu","Sindhi"]
-    }
+    // language:{
+    //     type:String,
+    //     set:["English","Hindi","Marathi","Gujrati","Punjabi","Bhojpuri",
+    //          "Bengali","Oriya","Telugu","Kannada","Malayalam","Tamil",
+    //          "Urdu","Sindhi"]
+    // }
 })
 
 module.exports = mongoose.model("Profile", ProfileSchema);
