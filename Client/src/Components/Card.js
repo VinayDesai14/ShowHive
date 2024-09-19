@@ -5,7 +5,7 @@ import './Card.css';
 const CardComp = () => {
   return (
     <div>
-        <Card>
+        <Card className='cards'>
         <Card.Img variant="top" src={GFG} />
         <Card.Body>
             <Card.Title>Card Title</Card.Title>
