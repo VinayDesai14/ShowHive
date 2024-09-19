@@ -1,17 +1,16 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card';
-import GFG from '../Assests/Images/gfg.jpeg';
 import './Card.css';
-const CardComp = () => {
+const CardComp = ({Title,Img,Location,Price}) => {
   return (
     <div>
         <Card className='cards'>
-        <Card.Img variant="top" src={GFG} />
+        <Card.Img variant="top" src={Img} />
         <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>Location:
+            <Card.Title>Card Title:{Title}</Card.Title>
+            <Card.Text>Location:{Location}
                 <br/>
-                Price:
+                Price:{Price}
             </Card.Text>
         </Card.Body>
         </Card>

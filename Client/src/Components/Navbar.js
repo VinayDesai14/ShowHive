@@ -13,10 +13,10 @@ const NavbarComp = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="navbar-toggler" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#music">Music</Nav.Link>
-            <Nav.Link href="#events">Events</Nav.Link>
-            <Nav.Link href="#plays">Plays</Nav.Link>
-            <Nav.Link href="#sports">Sports</Nav.Link>
+            <Nav.Link href="/music">Music</Nav.Link>
+            <Nav.Link href="/events">Events</Nav.Link>
+            <Nav.Link href="/plays">Plays</Nav.Link>
+            <Nav.Link href="/sports">Sports</Nav.Link>
           </Nav>
           <div className="ms-auto">
             <Signup className='signup-btn' />

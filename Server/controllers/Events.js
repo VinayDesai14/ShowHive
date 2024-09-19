@@ -5,7 +5,7 @@ exports.getAllEvents= async (req,res)=>{
 
     try {
         
-        const getAllEvents=await eventDetails.find({type:"Events"});
+        const getAllEvents=await eventDetails.find({category:"Events"});
 
         return res.status(200).json({
             success:true,

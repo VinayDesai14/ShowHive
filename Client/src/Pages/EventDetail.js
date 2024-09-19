@@ -41,7 +41,7 @@ const EventDetail = () => {
   // }
 
 
-  const Type = [
+  const Categories = [
     "Music",
     "Event",
     "Play",
@@ -155,7 +155,7 @@ const EventDetail = () => {
 
         {/* Event Type Dropdown */}
         <div className="eventInput">
-          <label>Type:</label>
+          <label>Categories:</label>
           <select
             value={selectedType}
             onChange={(e) => {
@@ -163,8 +163,8 @@ const EventDetail = () => {
               setSelectedCategory('');  // Reset category when type changes
             }}
           >
-            <option value="">Select Type</option>
-            {Type.map((type) => (
+            <option value="">Select Categories</option>
+            {Categories.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -175,12 +175,12 @@ const EventDetail = () => {
         {/* Event Category Dropdown */}
         {selectedType && (
           <div className="eventInput">
-            <label>Category:</label>
+            <label>Types:</label>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              <option value="">Select Category</option>
+              <option value="">Select Types</option>
               {getCategories().map((category) => (
                 <option key={category} value={category}>
                   {category}
