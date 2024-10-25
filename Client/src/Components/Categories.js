@@ -1,41 +1,31 @@
 import React, { useState } from 'react';
 import './Categories.css';
 
-const Categories = () => {
-  // State to keep track of the active button
+const Categories = ({ categories = [], handleTypeChange }) => {
   const [activeButton, setActiveButton] = useState(null);
 
-  // Handler to update the active button index
-  const handleButtonClick = (index) => {
-    if(activeButton===index){
-        setActiveButton(-1);
-    }else setActiveButton(index);
+  const handleButtonClick = (category, index) => {
+    if (activeButton === index) {
+      setActiveButton(null);
+      handleTypeChange(null); // Reset if deselecting
+    } else {
+      setActiveButton(index);
+      handleTypeChange(category); // Pass selected category to parent
+    }
   };
-
-  const categories = [
-    "Online Streaming",
-    "Comedy shows",
-    "Action movies",
-    "Drama",
-    "Horror",
-    "Documentaries",
-    "Cartoons",
-    "Music Shows",
-  ];
-
   return (
     <div className="categories">
-      {categories.map((category, index) => (
+      {categories && categories.map((category, index) => (
         <button
           key={index}
-          onClick={() => handleButtonClick(index)}
-          className={activeButton === index ? 'active' : ''} // Add active class to clicked button
+          onClick={() => handleButtonClick(category, index)}
+          className={activeButton === index ? 'active' : ''}
         >
           {category}
         </button>
       ))}
     </div>
   );
-}
+};
 
 export default Categories;

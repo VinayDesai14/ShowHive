@@ -1,9 +1,9 @@
 .eventContainer{
-    margin:1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    margin-top:1rem;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
 }
 .row{
     row-gap: 2rem;

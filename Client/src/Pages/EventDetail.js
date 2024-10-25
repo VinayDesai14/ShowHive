@@ -41,7 +41,7 @@ const EventDetail = () => {
   // }
 
 
-  const Type = [
+  const Categories = [
     "Music",
     "Event",
     "Play",
@@ -119,8 +119,14 @@ const EventDetail = () => {
 
         {/* Ticket Price */}
         <div className="eventInput">
-          <label>Ticket Price:</label>
-          <input type="text" id="price" placeholder="Enter your ticket price" />
+          <label>Ticket Price(General):</label>
+          <input type="text" id="price" placeholder="Enter your ticket price(Gen)" />
+        </div>
+
+        {/* Ticket Price */}
+        <div className="eventInput">
+          <label>Ticket Price(VIP):</label>
+          <input type="text" id="price" placeholder="Enter your ticket price(VIP)" />
         </div>
 
         {/* Event Duration */}
@@ -130,12 +136,12 @@ const EventDetail = () => {
         </div>
 
         <div className="eventInput">
-          <label>Total No. of General Tickets:</label>
+          <label>Total No. of Tickets(General):</label>
           <input type="number" id="duration" placeholder="Enter your No. of General Tickets (Min:50) " min="50" />
         </div>
 
         <div className="eventInput">
-          <label>Total No. of VIP Tickets:</label>
+          <label>Total No. of Tickets(VIP):</label>
           <input type="number" id="duration"  placeholder="Enter your No. of VIP Tickets" min="0"/>
         </div>
 
@@ -155,7 +161,7 @@ const EventDetail = () => {
 
         {/* Event Type Dropdown */}
         <div className="eventInput">
-          <label>Type:</label>
+          <label>Categories:</label>
           <select
             value={selectedType}
             onChange={(e) => {
@@ -163,8 +169,8 @@ const EventDetail = () => {
               setSelectedCategory('');  // Reset category when type changes
             }}
           >
-            <option value="">Select Type</option>
-            {Type.map((type) => (
+            <option value="">Select Categories</option>
+            {Categories.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
@@ -175,12 +181,12 @@ const EventDetail = () => {
         {/* Event Category Dropdown */}
         {selectedType && (
           <div className="eventInput">
-            <label>Category:</label>
+            <label>Types:</label>
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
-              <option value="">Select Category</option>
+              <option value="">Select Types</option>
               {getCategories().map((category) => (
                 <option key={category} value={category}>
                   {category}
