@@ -26,7 +26,7 @@ app.use(
 
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", eventsRoutes);
-// app.use("/api/v1", musicRoutes);
+app.use("/api/v1", musicRoutes);
 // app.use("/api/v1", sportsRoutes);
 // app.use("/api/v1", playsRoutes);
 app.use("/api/v1",profileRoutes);

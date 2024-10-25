@@ -4,7 +4,15 @@ const { uploadImageToCloudinary } = require("../utils/imageUploader")
 exports.getAllEvents= async (req,res)=>{
 
     try {
-        
+        const fetchedType=req.query.type;
+        if(fetchedType){
+            const getAllEvents=await eventDetails.find({category:"Events",type:fetchedType});
+            return res.status(200).json({
+                success:true,
+                getAllEvents,
+                message:'Successfully fetched all the events'
+            });
+        }
         const getAllEvents=await eventDetails.find({category:"Events"});
 
         return res.status(200).json({

@@ -20,23 +20,31 @@ exports.SignUp= async (req,res)=>{
         const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
 		console.log(response);
 		if (response.length === 0) {
-			return res.status(400).json({
+			return res.status(403).json({
 				success: false,
 				message: "The OTP is not valid",
 			});
 		} else if (otp !== response[0].otp) {
-			return res.status(400).json({
+			return res.status(403).json({
 				success: false,
-				message: "The OTP is not valid",
+				message: "The OTP doesn't match",
 			});
 		}
 
-		const isUserPresent = await User.findOne({email});
+		let user= await User.findOne({email});
 
-		if(isUserPresent){
+		if(user){
+			const token = jwt.sign(
+				{ email: user.email, id: user._id},
+				process.env.JWT_SECRET,
+				{
+					expiresIn: "7d",
+				}
+			);
 			return res.status(200).json({
 				success: true,
-				isUserPresent,
+				user,
+				token,
 				message: "User is already registered ",
 			})
 		}
@@ -48,7 +56,7 @@ exports.SignUp= async (req,res)=>{
 			gender: null,
 			maritalStatus: null
 		});
-		const user = await User.create({
+		 user = await User.create({
 			email,
 			profileDetails: profileDetails._id,
 			image: `https://api.dicebear.com/5.x/initials/svg?seed=${profileDetails.firstName || 'Anonymous'}&${profileDetails.lastName || 'User'}`,

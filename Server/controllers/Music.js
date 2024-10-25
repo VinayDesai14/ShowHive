@@ -5,7 +5,8 @@ exports.getAllMusicShows= async (req,res)=>{
 
     try {
         
-        const getAllEvents=eventDetails.find({type:"Music"});
+        const getAllEvents=await eventDetails.find({category:"Music"});
+        console.log(getAllEvents);
 
         return res.status(200).json({
             success:true,
@@ -16,7 +17,7 @@ exports.getAllMusicShows= async (req,res)=>{
     } catch (error) {
         return res.status(500).json({
 			success: false,
-			message: "Something went wrong while signing up the user",
+			message: "Something went wrong while getting the music data",
 		});
     }
 }

@@ -1,29 +1,32 @@
 nav.navbar {
-    padding: 18px 0;
-    width: 100%;
-    /* position: fixed; */
-    top: 0;
-    z-index: 9999;
-    transition:  0.32s ease-in-out;
-    background: rgb(238, 233, 233);
-  }
-   .container{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: nowrap;
-    gap:5rem;
-    overflow: hidden;
-  }
-  .me-auto{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: nowrap;
-    gap:4rem;
-  } 
+  padding: 18px 0;
+  width: 100%;
+  top: 0;
+  z-index: 1;
+  transition: 0.32s ease-in-out;
+  background: rgb(238, 233, 233);
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 5rem;
+  overflow: visible; /* Ensure the dropdown can overflow */
+}
+.me-auto {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+  gap: 4rem;
+}
+.navbar-collapse {
+  position: relative; /* Ensure dropdown positions correctly */
+}
+
   nav.navbar.scrolled {
     padding: 0px 0;
     background-color: #121212;
@@ -47,7 +50,6 @@ nav.navbar {
       display: flex;
       align-items: center;
   }
-  
   .navbar-text button {
     font-weight: 700;
     color: #fff;

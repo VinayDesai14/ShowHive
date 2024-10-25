@@ -11,6 +11,9 @@ import './Signup.css';
 import axios from 'axios';
 import { endpoints } from '../services/api'; // Adjust this path after moving api files to src
 import { apiConnector } from '../services/apiConnector'; // Adjust this path after moving api files to src
+import { setLoading, setToken } from '../Slices/authSlice';
+import { useDispatch } from "react-redux"
+import { setUser } from '../Slices/profileSlice';
 
 function EmailModal(props) {
     const { email, setEmail, onNext } = props;  // Receive email and setter from parent
@@ -77,19 +80,49 @@ function EmailModal(props) {
 
 function OtpModal({ email, ...props }) {
     const [otp, setOtp] = useState('');
+    const [error, setError] = useState('');  // Error state
     const navigate = useNavigate();
-    
+    const dispatch = useDispatch()
     const onhandleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log('hi ')
+            console.log('email ',email);
+            console.log('otp ',otp);
             const response = await axios.post('http://localhost:8000/api/v1/signup', { email, otp });
+            
+            if (!response.data.success) {
+                throw new Error(response.data.message)
+              }
+            
+              dispatch(setToken(response.data.token))
+              const userImage = response.data?.user?.image
+                ? response.data.user.image
+                : `https://api.dicebear.com/5.x/initials/svg?seed=AB`
+              dispatch(setUser({ ...response.data.user, image: userImage }))
+
+            //   const userImage = response.data?.user?.image
+            //     ? response.data.user.image
+            //     : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName}&${response.data.user.lastName}`
+            //   dispatch(setUser({ ...response.data.user, image: userImage }))
+              console.log('response ',response.data)
+              localStorage.setItem("token", JSON.stringify(response.data.token))
+              localStorage.setItem("user", JSON.stringify(response.data.user))
+              localStorage.setItem("tokenExpirationTime", JSON.stringify(Date.now()+7 * 24 * 60 * 60 * 1000))
             if (response.data.success) {
-                navigate("/");
+                props.setOtpModalShow(false);  // Close OTP modal on success
+                navigate("/");  // Navigate to homepage on success
             } else {
-                console.log("OTP verification failed");
+                setError("OTP verification failed");  // Set error message
             }
         } catch (error) {
             console.log(error);
+            if (error.response && error.response.status === 403) {
+                setError("The OTP doesn't match or the email is incorrect");  // Set error from server
+            } else {
+                setError("An unexpected error occurred. Please try again.");
+            }
+            console.error("Error during OTP submission:", error);
         }
     };
 
@@ -118,6 +151,7 @@ function OtpModal({ email, ...props }) {
                     }}
                     renderInput={(props) => <input {...props} />}
                 />
+                {error && <p style={{ color: 'red', marginTop: '10px' }}>{error}</p>}  {/* Display error message */}
                 <div className="mt-3">
                     <Button variant="success" onClick={onhandleSubmit}>Submit</Button>
                 </div>
@@ -200,12 +234,14 @@ const Signup = () => {
                 setEmail={setEmail}  // Pass setEmail as prop
             />
 
-            <OtpModal
-                show={otpModalShow}
-                onHide={() => setOtpModalShow(false)}
-                email={email}  // Pass email to OtpModal
-                onSubmit={handleSubmit}
-            />
+<OtpModal
+    show={otpModalShow}
+    onHide={() => setOtpModalShow(false)}
+    email={email}
+    setOtpModalShow={setOtpModalShow}  // Pass this as a prop
+    onSubmit={handleSubmit}
+/>
+
         </>
     );
 }
