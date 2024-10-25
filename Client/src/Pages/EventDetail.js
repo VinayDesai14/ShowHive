@@ -119,8 +119,14 @@ const EventDetail = () => {
 
         {/* Ticket Price */}
         <div className="eventInput">
-          <label>Ticket Price:</label>
-          <input type="text" id="price" placeholder="Enter your ticket price" />
+          <label>Ticket Price(General):</label>
+          <input type="text" id="price" placeholder="Enter your ticket price(Gen)" />
+        </div>
+
+        {/* Ticket Price */}
+        <div className="eventInput">
+          <label>Ticket Price(VIP):</label>
+          <input type="text" id="price" placeholder="Enter your ticket price(VIP)" />
         </div>
 
         {/* Event Duration */}
@@ -130,12 +136,12 @@ const EventDetail = () => {
         </div>
 
         <div className="eventInput">
-          <label>Total No. of General Tickets:</label>
+          <label>Total No. of Tickets(General):</label>
           <input type="number" id="duration" placeholder="Enter your No. of General Tickets (Min:50) " min="50" />
         </div>
 
         <div className="eventInput">
-          <label>Total No. of VIP Tickets:</label>
+          <label>Total No. of Tickets(VIP):</label>
           <input type="number" id="duration"  placeholder="Enter your No. of VIP Tickets" min="0"/>
         </div>
 

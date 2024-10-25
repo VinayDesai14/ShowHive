@@ -1,42 +1,59 @@
 .categories {
-    display: grid;
-    grid-gap: 10px;
-    padding: 10px;
-  }
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-wrap: wrap; /* Allow the buttons to wrap to the next row */
+  gap: 2rem;
+  padding: 6px;
+  justify-content: center;/* Align items to the centre */
+}
+
+.categories button {
+  background-color: #ffffff;
+  color: rgb(255, 52, 52);
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 1.2rem;
+  padding: 0.3rem 1rem !important;
+  width: auto; /* Let the width be determined by the button content */
+  flex-grow: 0; /* Prevent the button from growing */
+  flex-shrink: 0; /* Prevent shrinking if fewer buttons */
+  max-width: calc(100% / 3 - 2rem); /* Restrict max-width for small screens */
+}
+
+/* Active button style */
+.categories button.active {
+  background-color: rgb(253, 50, 50); /* Change to the active color */
+  color: white; /* Change text color for active button */
+}
+
+/* 8 buttons per row on large screens */
+@media (min-width: 1200px) {
   .categories button {
-    background-color: #ffffff;
-    color: rgb(253, 50, 50);
-    padding: 8px;
-    text-decoration: none;
-    cursor: pointer;
-    border-radius: 18px;
-    box-sizing: border-box;
+    flex: 1 1 auto;
+    max-width: calc(12.5% - 2rem); /* Ensure max width remains within 8 per row */
   }
+}
 
-  .categories button.active {
-    background-color: rgb(253, 50, 50); /* Change to the active color */
-    color: white; /* Change text color for active button */
+/* 6 buttons per row on medium screens */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .categories button {
+    flex: 1 1 auto;
+    max-width: calc(16.66% - 2rem); /* Ensure max width for 6 per row */
   }
-  /* 8 buttons per row on large screens */
-  @media (min-width: 1200px) {
-    .categories {
-      grid-template-columns: repeat(8, 1fr);
-    }
-  }
-  
-  /* 6 buttons per row on medium screens */
-  @media (min-width: 768px) and (max-width: 1199px) {
-    .categories {
-      grid-template-columns: repeat(6, 1fr);
-    }
-  }
-  
-  /* 3 buttons per row on small screens */
-  @media (max-width: 767px) {
-    .categories {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  
+}
 
+/* 3 buttons per row on small screens */
+@media (max-width: 767px) {
+  .categories button {
+    flex: 1 1 auto;
+    max-width: calc(33.33% - 2rem); /* Ensure max width for 3 per row */
+  }
+}
+
+@media (max-width: 380px) {
+  .categories button {
+    flex: 1 1 auto;
+    max-width: calc(50% - 2rem); /* Ensure max width for 3 per row */
+  }
+}

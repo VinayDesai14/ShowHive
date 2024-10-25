@@ -8,8 +8,42 @@ import { FcGoogle } from "react-icons/fc";
 import { AiOutlineMail } from "react-icons/ai";
 import { FaFacebook } from "react-icons/fa";
 import './Signup.css';
+import axios from 'axios';
+import { endpoints } from '../services/api'; // Adjust this path after moving api files to src
+import { apiConnector } from '../services/apiConnector'; // Adjust this path after moving api files to src
 
 function EmailModal(props) {
+    const { email, setEmail, onNext } = props;  // Receive email and setter from parent
+    const [isEmailValid, setIsEmailValid] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const validateEmail = (e) => {
+        const emailInput = e.target.value;
+        setEmail(emailInput);
+
+        // Simple regex for email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        setIsEmailValid(emailRegex.test(emailInput));
+    };
+
+    const sendOtp = async () => {
+        if (isEmailValid) {
+            setIsLoading(true);
+            try {
+                const response = await axios.post('http://localhost:8000/api/v1/sendotp', { email });
+                if (response.data.success) {  // Check if OTP sent successfully
+                    setIsLoading(false);
+                    onNext();  // Show OTP Modal
+                } else {
+                    console.error("OTP sending failed", response.data.message);
+                }
+            } catch (error) {
+                setIsLoading(false);
+                console.error("Error sending OTP:", error);
+            }
+        }
+    };
+
     return (
         <Modal {...props} size="md" centered>
             <Modal.Header closeButton>
@@ -19,26 +53,49 @@ function EmailModal(props) {
                 <form>
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="email" placeholder="name@example.com" />
+                        <input 
+                            type="email" 
+                            className="form-control" 
+                            id="email" 
+                            placeholder="name@example.com"
+                            value={email}
+                            onChange={validateEmail}
+                        />
                     </div>
-                    <Button variant="primary" onClick={props.onNext}>Continue</Button>
+                    <Button 
+                        variant="primary" 
+                        onClick={sendOtp} 
+                        disabled={!isEmailValid || isLoading}
+                    >
+                        {isLoading ? 'Sending...' : 'Continue'}
+                    </Button>
                 </form>
             </Modal.Body>
         </Modal>
     );
 }
 
-function OtpModal(props) {
-    const [otp, setOtp] = useState('');  // State for OTP
+function OtpModal({ email, ...props }) {
+    const [otp, setOtp] = useState('');
+    const navigate = useNavigate();
+    
+    const onhandleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('http://localhost:8000/api/v1/signup', { email, otp });
+            if (response.data.success) {
+                navigate("/");
+            } else {
+                console.log("OTP verification failed");
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleChange = (otp) => {
         setOtp(otp);
     };
-    const navigate=useNavigate();
-    function onhandleSubmit(e){
-        e.preventDefault();
-        navigate("/");
-    }
 
     return (
         <Modal {...props} size="md" centered>
@@ -106,6 +163,7 @@ const Signup = () => {
     const [modalShow, setModalShow] = useState(false);
     const [emailModalShow, setEmailModalShow] = useState(false);
     const [otpModalShow, setOtpModalShow] = useState(false);
+    const [email, setEmail] = useState('');  // Move email state to Signup component
 
     const handleEmailClick = () => {
         setModalShow(false);
@@ -138,11 +196,14 @@ const Signup = () => {
                 show={emailModalShow}
                 onHide={() => setEmailModalShow(false)}
                 onNext={handleOtpModal}
+                email={email}  // Pass email as prop
+                setEmail={setEmail}  // Pass setEmail as prop
             />
 
             <OtpModal
                 show={otpModalShow}
                 onHide={() => setOtpModalShow(false)}
+                email={email}  // Pass email to OtpModal
                 onSubmit={handleSubmit}
             />
         </>

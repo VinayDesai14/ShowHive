@@ -9,7 +9,7 @@ const NavbarComp = () => {
   return (
     <Navbar expand="lg">
       <Container>
-        <Navbar.Brand href="#home" className="d-flex align-items-center">ShowHive</Navbar.Brand>
+        <Navbar.Brand href="/" className="d-flex align-items-center">ShowHive</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" className="navbar-toggler" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

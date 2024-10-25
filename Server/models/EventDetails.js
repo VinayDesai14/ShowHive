@@ -42,7 +42,11 @@ const eventDetailsSchema=new mongoose.Schema({
       type:String,
       required:true
      },
-     seats:{
+     generalSeats:{
+      type:String,
+      required:true
+     },
+     vipSeats:{
       type:String,
       required:true
      }

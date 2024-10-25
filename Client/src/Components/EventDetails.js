@@ -8,7 +8,7 @@ import './EventDetails.css'
 const EventDetails = () => {
   return (
     
-    <Container className='eventContainer'>
+    <div className='eventContainer'>
       <Categories/>
       <Row>
         <Col lg={3} md={4} sm={6}><Card/></Col>
@@ -20,7 +20,7 @@ const EventDetails = () => {
         <Col lg={3} md={4} sm={6}><Card/></Col>
         <Col lg={3} md={4} sm={6}><Card/></Col>
       </Row>
-    </Container>
+    </div>
     
   )
 }
