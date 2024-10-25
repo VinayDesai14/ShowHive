@@ -24,7 +24,7 @@ exports.getAllMusicShows= async (req,res)=>{
     } catch (error) {
         return res.status(500).json({
 			success: false,
-			message: "Something went wrong while signing up the user",
+			message: "Something went wrong while getting the music data",
 		});
     }
 }
