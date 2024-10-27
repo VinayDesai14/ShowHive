@@ -9,6 +9,7 @@ import Sports from './Pages/Sports';
 import SingleEventPage from './Components/SingleEventPage';
 import Navbar from './Components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Profile from './Pages/Profile';
 function App() {
   return (
     <>
@@ -23,6 +24,7 @@ function App() {
       <Route path="/music/:id" element={<SingleEventPage category="music" />} />
       <Route path="/plays/:id" element={<SingleEventPage category="plays" />} />
       <Route path="/sports/:id" element={<SingleEventPage category="sports" />} />
+      <Route path="/my-profile" element={<Profile/>} />
     </Routes>
     </>
     
