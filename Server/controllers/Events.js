@@ -68,3 +68,21 @@ exports.createEvent= async(req,res)=>{
         });
     }
 }
+
+exports.getEventDetails= async (req,res)=>{
+   try {
+        const {id}=req.body;
+        const reqEventDetails=await eventDetails.findById(id);
+
+        return res.status(200).json({
+            success:true,
+            reqEventDetails,
+            message:'Succesfully fetched event details'
+        })
+   } catch (error) {
+    return res.status(500).json({
+        success: false,
+        message: "Something went wrong while fetching the event details",
+    });
+   }
+}

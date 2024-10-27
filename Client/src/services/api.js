@@ -12,6 +12,7 @@ export const eventEndpoints = {
     GETALLMUSIC_API:BASE_URL+"/getMusic",
     GETALLPLAYS_API:BASE_URL+"/getPlays",
     GETALLSPORTS_API:BASE_URL+"/getSports",
+    GETEVENTDETAILS_API:BASE_URL+"/getEventDetails"
 }
 
 export const profileEndpoints = {
