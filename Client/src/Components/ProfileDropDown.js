@@ -63,7 +63,7 @@ export default function ProfileDropdown() {
             </div>
           </Link>
           <div
-            onClick={() => {
+              onClick={() => {
               dispatch(logout(navigate))
               setOpen(false)
               setIsCaretDown(true)
