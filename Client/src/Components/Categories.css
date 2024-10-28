@@ -11,9 +11,9 @@
 .categories button {
   background-color: #ffffff;
   color: rgb(255, 52, 52);
-  text-decoration: none;
   cursor: pointer;
   border-radius: 1.2rem;
+  border: 0.1rem solid black !important;
   padding: 0.3rem 1rem !important;
   width: auto; /* Let the width be determined by the button content */
   flex-grow: 0; /* Prevent the button from growing */
