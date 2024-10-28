@@ -44,12 +44,12 @@ exports.verifyPayment = async(req, res) => {
     const razorpay_order_id = req.body?.razorpay_order_id;
     const razorpay_payment_id = req.body?.razorpay_payment_id;
     const razorpay_signature = req.body?.razorpay_signature;
-    const courses = req.body?.courses;
+    const event = req.body?.event;
     const userId = req.user.id;
 
     if(!razorpay_order_id ||
         !razorpay_payment_id ||
-        !razorpay_signature || !courses || !userId) {
+        !razorpay_signature || !event || !userId) {
             return res.status(200).json({success:false, message:"Payment Failed"});
     }
 
@@ -61,7 +61,7 @@ exports.verifyPayment = async(req, res) => {
 
         if(expectedSignature === razorpay_signature) {
             //enroll karwao student ko
-            await enrollStudents(courses, userId, res);
+            await enrollStudents(event, userId, res);
             //return res
             return res.status(200).json({success:true, message:"Payment Verified"});
         }
@@ -91,7 +91,7 @@ const addTicketsinUser = async(eventId,userId) => {
         const emailResponse = await mailSender(
             enrollStudents.email,
             `Successfully Enrolled into ${enrolledCourse.courseName}`,
-            ticketConfirmationTemplate(eventDetails.title,eventDetails.date,eventDetails.venue,QRCodeURL)
+            ticketConfirmationTemplate(eventDetails.title,eventDetails.date,eventDetails.location,QRCodeURL)
         )    
         //console.log("Email Sent Successfully", emailResponse.response);
         }

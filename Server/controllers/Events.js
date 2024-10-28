@@ -39,7 +39,7 @@ exports.createEvent= async(req,res)=>{
 
         // console.log('imageUrl ',image);
         // console.log('date ',date);
-        console.log('image ', image);
+        // console.log('image ', image);
         if(!image || !date || !location || !title || !price ||
            !duration || !language || !artist || !type || !category || !generalSeats || !vipSeats
         ){
