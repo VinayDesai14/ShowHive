@@ -49,7 +49,22 @@ const eventDetailsSchema=new mongoose.Schema({
      vipSeats:{
       type:String,
       required:true
-     }
+     },
+     generalSeatPrice:{
+      type:String,
+      required:true
+     },
+     vipSeatPrice:{
+      type:String,
+      required:true
+     },
+     userEnrolled: [
+        {
+           type: mongoose.Schema.Types.ObjectId,
+           required: true,
+           ref: "User",
+        },
+     ]
 });
 
 module.exports = mongoose.model("eventDetails", eventDetailsSchema);

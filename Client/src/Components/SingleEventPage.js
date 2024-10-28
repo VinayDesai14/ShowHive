@@ -6,7 +6,7 @@ import axios from 'axios';
 import { eventEndpoints } from '../services/api';
 import { apiConnector } from '../services/apiConnector';
 import './SingleEventPage.css';
-
+import { formatDate } from '../services/formatDate';
 const SingleEventPage = (category) => {
   const { id } = useParams();
   const [event, setEvent] = useState(null);
@@ -74,7 +74,7 @@ const SingleEventPage = (category) => {
       <div className='event-detail'>
         <h2>{event.title} by {event.artist}</h2>
         <p> <span>{event.type}</span> | <span>{event.language}</span> | <span>{event.duration} Hours</span></p>
-        <p><span>{event.date}</span> | <span><FaLocationDot /></span> <span>{event.location}</span> | <span>Rs.{event.price} onwards</span></p>
+        <p><span>{formatDate(event.date)}</span> | <span><FaLocationDot /></span> <span>{event.location}</span> | <span>Rs.{event.price} onwards</span></p>
         <button className="btn btn-primary" onClick={handleShow}>Book</button>
       </div>
 
