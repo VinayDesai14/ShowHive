@@ -62,7 +62,6 @@ export default function ProfileDropdown() {
           ref={ref}
         >
           <div onClick={() => { setOpen(false) 
-                                setIsCaretDown(true)
                                  navigate('/my-profile')}}>
             <div className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 ">
               <CgProfile  className="text-lg " />
@@ -71,22 +70,20 @@ export default function ProfileDropdown() {
           </div>
 
           <div
-            // onClick={() => {
-            //   dispatch(logout(navigate))
-            //   setOpen(false)
-            //   setIsCaretDown(true)
-            // }}
+            onClick={() => {
+              setOpen(false)
+              navigate('/create-event')
+            }}
            className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
             <IoTicketSharp  className="text-lg" />
             CreateEvent
           </div>
           <div
-            // onClick={() => {
-            //   dispatch(logout(navigate))
-            //   setOpen(false)
-            //   setIsCaretDown(true)
-            // }}
+            onClick={() => {
+              setOpen(false)
+              navigate('/my-event')
+            }}
             className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
             <MdEventAvailable className="text-lg" />
@@ -97,7 +94,6 @@ export default function ProfileDropdown() {
             onClick={() => {
               dispatch(logout(navigate))
               setOpen(false)
-              setIsCaretDown(true)
             }}
             className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
@@ -109,42 +105,3 @@ export default function ProfileDropdown() {
     </button>
   )
 }
-
-{/* <button className="pBtn" onClick={() =>{ setOpen(true) 
-      setIsCaretDown(false)}}>
-      <div className="flex items-center gap-x-1">
-        <img
-          src={user?.image}
-          alt={`profile-${user?.firstName}`}
-          className="imgC"
-        />
-        {isCaretDown?(<AiOutlineCaretDown className="arrowD" />):
-                <AiOutlineCaretUp className="arrowU" />}
-      </div>
-      {open && (
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="profileIcon"
-          ref={ref}
-        >
-          <Link to="/dashboard/my-profile" onClick={() => { setOpen(false) 
-                                                            setIsCaretDown(true)}}>
-            <div className="profile">
-              <VscDashboard className="text-lg" />
-              Profile
-            </div>
-          </Link>
-          <div
-            onClick={() => {
-              // dispatch(logout(navigate))
-              setOpen(false)
-              setIsCaretDown(true)
-            }}
-            className="flex w-full items-center gap-x-1 py-[10px] px-[12px] text-sm text-richblack-100 hover:bg-richblack-700 hover:text-richblack-25"
-          >
-            <VscSignOut className="text-lg" />
-            Logout
-          </div>
-        </div>
-      )}
-    </button> */}

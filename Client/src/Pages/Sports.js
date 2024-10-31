@@ -51,7 +51,7 @@ const SportsDetail = () => {
                 title={sport.title}
                 Img={sport.imageUrl}
                 Location={sport.location}
-                price={sport.price}
+                genralSeatPrice={sport.genralSeatPrice}
                 category="sports"
               />
             </Col>
