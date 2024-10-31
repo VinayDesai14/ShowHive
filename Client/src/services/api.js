@@ -21,6 +21,12 @@ export const profileEndpoints = {
   UPDATE_PROFILE_API: BASE_URL + "/profile/updateProfile"
 }
 
+export const userEndpoints = {
+  EVENT_PAYMENT_API: BASE_URL + "/payment/capturePayment",
+  EVENT_VERIFY_API: BASE_URL + "/payment/verifyPayment",
+  SEND_PAYMENT_SUCCESS_EMAIL_API: BASE_URL + "/payment/sendPaymentSuccessEmail",
+}
+
 
 
 

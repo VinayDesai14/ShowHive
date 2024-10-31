@@ -1,5 +1,5 @@
-import QRCode from 'qrcode.react';
 
+const {QRCode}=require('qrcode.react')
 const ticketConfirmationTemplate = ({ eventName,eventDate,venue,QRCodeURL }) => {
   return 
    ` <!DOCTYPE html>

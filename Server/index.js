@@ -10,7 +10,7 @@ const sportsRoutes = require("./routes/sports");
 const playsRoutes = require("./routes/plays");
 const profileRoutes=require("./routes/Profile");
 const ticketsRoutes=require("./routes/tickets");
-
+const paymentRoutes=require("./routes/payments")
 
 const fileUpload = require("express-fileupload");
 
@@ -37,7 +37,7 @@ app.use("/api/v1", sportsRoutes);
 app.use("/api/v1", playsRoutes);
 app.use("/api/v1",profileRoutes);
 app.use("/api/v1",ticketsRoutes);
-
+app.use("/api/v1/payment", paymentRoutes);
 
 app.listen(Port,()=>{
     console.log(`App is running at port ${Port}`);

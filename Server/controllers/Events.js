@@ -32,15 +32,20 @@ exports.getAllEvents= async (req,res)=>{
 exports.createEvent= async(req,res)=>{
 
     try {
-        const {date,location,title,price,
+        const {dateAndTime,location,title,generalSeatPrice,vipSeatPrice,
             duration,language,artist,type,category,generalSeats,vipSeats}=req.body;
             const image = req.files.image;
             console.log('Request body: ', req.body);
 
-        // console.log('imageUrl ',image);
+        console.log('imageUrl ',image);
+       // Convert the dateAndTime string from "dd-mm-yyyy hh:mm" to a valid Date object
+        const [datePart, timePart,zone] = dateAndTime.split(" ");
+        const [day, month, year] = datePart.split("/");
+        const [hours, minutes] = timePart.split(":");
+        const formattedDateAndTime = new Date(year, month - 1, day, hours, minutes);
         // console.log('date ',date);
         // console.log('image ', image);
-        if(!image || !date || !location || !title || !price ||
+        if(!image || !formattedDateAndTime || !location || !title || !generalSeatPrice || !vipSeatPrice || 
            !duration || !language || !artist || !type || !category || !generalSeats || !vipSeats
         ){
             return res.status(403).json({
@@ -52,8 +57,8 @@ exports.createEvent= async(req,res)=>{
             image,
             process.env.FOLDER_NAME
           )
-        const response= await eventDetails.create({imageUrl:imageUrl.secure_url,date,location,title,
-                                                   price,duration,language,artist,type,category,vipSeats,generalSeats});
+        const response= await eventDetails.create({imageUrl:imageUrl.secure_url,dateAndTime:formattedDateAndTime,location,title,
+            generalSeatPrice,vipSeatPrice,duration,language,artist,type,category,vipSeats,generalSeats});
         
         return res.status(200).json({
             success:true,
@@ -63,7 +68,7 @@ exports.createEvent= async(req,res)=>{
     } catch (error) {
         console.error(error);
         return res.status(500).json({
-            success:true,
+            success:false,
             message:'something went wrong while creating Event'
         });
     }

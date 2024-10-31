@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { FaLocationDot } from "react-icons/fa6";
-import axios from 'axios';
 import { eventEndpoints } from '../services/api';
 import { apiConnector } from '../services/apiConnector';
-import './SingleEventPage.css';
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate, useParams } from "react-router-dom"
 import { formatDate } from '../services/formatDate';
+import { buyEvent } from '../services/buyEventTicketApi';
+import './SingleEventPage.css';
+
 const SingleEventPage = (category) => {
   const { id } = useParams();
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [event, setEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [generalTickets, setGeneralTickets] = useState('');
@@ -56,7 +62,12 @@ const SingleEventPage = (category) => {
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
-
+  const handlePayment=()=> {
+    if (token) {
+      buyEvent(token, id, totalAmount,user, navigate, dispatch)
+      return
+    }
+  }
   if (!event) {
     return <div>Loading event details...</div>;
   }
@@ -113,7 +124,7 @@ const SingleEventPage = (category) => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary">
+          <Button variant="primary" onClick={handlePayment}>
             Proceed to Payment
           </Button>
         </Modal.Footer>

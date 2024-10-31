@@ -1,21 +1,21 @@
 const {instance} = require("../config/razorpay");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
-const {ticketConfirmationTemplate} = require("../mail/templates/courseEnrollmentEmail");
 const { default: mongoose } = require("mongoose");
-const { paymentSuccessEmail } = require("../mail/templates/paymentSuccessEmail");
+const { ticketConfirmationTemplate } = require("../mailTemplate/ticketConfirmationEmail");
+const {paymentSuccessEmail}=require('../mailTemplate/paymentSuccessEmail');
 const crypto = require("crypto");
 const EventDetails = require("../models/EventDetails");
 
 //initiate the razorpay order
 exports.capturePayment = async(req, res) => {
 
-    const {eventId,cnt} = req.body;
+    const {eventId,totalAmount} = req.body;
 
     const event =await EventDetails.findById(eventId);
 
 
-    let totalAmount = parseInt(event.price)*cnt;
+    // let totalAmount = parseInt(event.generalSeatPrice)*genCnt+parseInt(event.vipSeatPrice)*vipCnt;
 
     const currency = "INR";
     const options = {
@@ -61,7 +61,7 @@ exports.verifyPayment = async(req, res) => {
 
         if(expectedSignature === razorpay_signature) {
             //enroll karwao student ko
-            await enrollStudents(event, userId, res);
+            await addTicketsinUser(event, userId, res);
             //return res
             return res.status(200).json({success:true, message:"Payment Verified"});
         }
@@ -79,18 +79,21 @@ const addTicketsinUser = async(eventId,userId) => {
             //find the course and enroll the student in it
         const userDetails = await User.findOneAndUpdate(
             {_id:userId},
-            {$push:{eventId}},
+            {$push:{eventDetails:eventId}},
             {new:true},
         )
 
         if(!userDetails) {
             return res.status(500).json({success:false,message:"Course not Found"});
         }
-            
+        const enrolledEvent=await EventDetails.findByIdAndUpdate(eventId,
+            {$push:{
+                userEnrolled: userId,
+            }},{new:true})
         ///bachhe ko mail send kardo
         const emailResponse = await mailSender(
-            enrollStudents.email,
-            `Successfully Enrolled into ${enrolledCourse.courseName}`,
+            addTicketsinUser.email,
+            `Successfully Purchased ticket of  ${enrolledEvent.title}`,
             ticketConfirmationTemplate(eventDetails.title,eventDetails.date,eventDetails.location,QRCodeURL)
         )    
         //console.log("Email Sent Successfully", emailResponse.response);
@@ -114,11 +117,12 @@ exports.sendPaymentSuccessEmail = async(req, res) => {
 
     try{
         //student ko dhundo
-        const enrolledStudent = await User.findById(userId);
+        const enrolledUser = await User.findById(userId).populate('Profile').exec();
+        // const userProfile = await Profile.findById(enrolledUser.profileDetails)
         await mailSender(
-            enrolledStudent.email,
+            enrolledUser.email,
             `Payment Recieved`,
-             paymentSuccessEmail(`${enrolledStudent.firstName}`,
+             paymentSuccessEmail(`${enrolledUser.profileDetails.firstName}`,
              amount/100,orderId, paymentId)
         )
     }
