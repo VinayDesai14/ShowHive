@@ -32,7 +32,7 @@ exports.getAllEvents= async (req,res)=>{
 exports.createEvent= async(req,res)=>{
 
     try {
-        const {date,location,title,price,
+        const {date,location,title,generalSeatPrice,vipSeatPrice,
             duration,language,artist,type,category,generalSeats,vipSeats}=req.body;
             const image = req.files.image;
             console.log('Request body: ', req.body);
@@ -40,7 +40,7 @@ exports.createEvent= async(req,res)=>{
         // console.log('imageUrl ',image);
         // console.log('date ',date);
         // console.log('image ', image);
-        if(!image || !date || !location || !title || !price ||
+        if(!image || !date || !location || !title || !generalSeatPrice || !vipSeatPrice ||
            !duration || !language || !artist || !type || !category || !generalSeats || !vipSeats
         ){
             return res.status(403).json({
@@ -52,8 +52,8 @@ exports.createEvent= async(req,res)=>{
             image,
             process.env.FOLDER_NAME
           )
-        const response= await eventDetails.create({imageUrl:imageUrl.secure_url,date,location,title,
-                                                   price,duration,language,artist,type,category,vipSeats,generalSeats});
+        const response= await eventDetails.create({imageUrl:imageUrl.secure_url,date,location,title,vipSeatPrice,
+            generalSeatPrice,duration,language,artist,type,category,vipSeats,generalSeats});
         
         return res.status(200).json({
             success:true,

@@ -1,4 +1,4 @@
-const User=requrie('../models/User')
+const User=require('../models/User')
 
 exports.getUserTickets= async (req,res)=>{
 

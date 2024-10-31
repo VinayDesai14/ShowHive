@@ -52,7 +52,7 @@ const MusicDetail = () => {
                 title={music.title}
                 Img={music.imageUrl}
                 Location={music.location}
-                price={music.price}
+                genralSeatPrice={music.genralSeatPrice}
                 category="music"
               />
             </Col>

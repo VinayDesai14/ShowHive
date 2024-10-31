@@ -10,6 +10,8 @@ import SingleEventPage from './Components/SingleEventPage';
 import Navbar from './Components/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Profile from './Pages/Profile';
+import MyEvent from './Pages/MyEvent';
+import EventDetail from './Pages/EventDetail';
 function App() {
   return (
     <>
@@ -20,6 +22,8 @@ function App() {
       <Route path='/events' element={<Events/>} > </Route>
       <Route path='/plays' element={<Plays/>} > </Route>
       <Route path='/sports' element={<Sports/>} > </Route>
+      <Route path='/my-event' element={<MyEvent/>} > </Route>
+      <Route path='/create-event' element={<EventDetail/>} > </Route>
       <Route path="/events/:id" element={<SingleEventPage category="events" />} />
       <Route path="/music/:id" element={<SingleEventPage category="music" />} />
       <Route path="/plays/:id" element={<SingleEventPage category="plays" />} />

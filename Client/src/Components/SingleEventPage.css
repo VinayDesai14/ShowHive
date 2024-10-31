@@ -55,3 +55,18 @@
     align-items: center;
     gap:0.2rem;
   }
+
+  .ticket-counter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.ticket-counter .ticket-count {
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 45px;
+    text-align: center;
+}

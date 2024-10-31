@@ -1,4 +1,4 @@
-const {getUserTickets}=requrie('../controllers/Tickets');
+const {getUserTickets}=require('../controllers/Tickets');
 const router=require("express").Router();
 const {auth}=require('../middleware/auth');
 
