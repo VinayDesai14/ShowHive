@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { useEffect, useRef, useState } from "react"
 import { AiOutlineCaretDown,AiOutlineCaretUp } from "react-icons/ai"
 import { VscDashboard, VscSignOut } from "react-icons/vsc"
@@ -41,12 +40,10 @@ export default function ProfileDropdown() {
     }
 
     const handleOnClick =()=>{
-      console.log('before ',open);
       if(open)
       setOpen(false);
     else
     setOpen(true);
-    console.log('before ',open);
     }
 
   return (
@@ -61,7 +58,7 @@ export default function ProfileDropdown() {
       {open && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute w-[200px] top-[118%]  right-[50%] z-[1000]   overflow-hidden rounded-md border-[1px] border-richblack-700 bg-white"
+          className="absolute w-[200px] top-[118%]  right-[50%] z-[1000] divide-y-[1px] divide-richblack-25 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-white"
           ref={ref}
         >
           <div onClick={() => { setOpen(false) 
@@ -79,7 +76,7 @@ export default function ProfileDropdown() {
             }}
            className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
-            <MdEventAvailable className="text-lg" />
+            <IoTicketSharp  className="text-lg" />
             CreateEvent
           </div>
           <div
@@ -89,12 +86,12 @@ export default function ProfileDropdown() {
             }}
             className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
-            <IoTicketSharp  className="text-lg" />
+            <MdEventAvailable className="text-lg" />
             MyEvents
           </div>
 
           <div
-              onClick={() => {
+            onClick={() => {
               dispatch(logout(navigate))
               setOpen(false)
             }}

@@ -5,7 +5,7 @@ const eventDetailsSchema=new mongoose.Schema({
         type:String,
         required:true,
      },
-     date:{
+     dateAndTime:{
         type: Date,
         required:true
      },
@@ -14,10 +14,6 @@ const eventDetailsSchema=new mongoose.Schema({
         required:true,
      },
      title:{
-        type:String,
-        required:true
-     },
-     price:{
         type:String,
         required:true
      },

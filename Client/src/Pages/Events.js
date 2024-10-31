@@ -52,7 +52,7 @@ const EventDetails = () => {
                 title={event.title}
                 Img={event.imageUrl}
                 Location={event.location}
-                price={event.price}
+                generalSeatPrice={event.generalSeatPrice}
                 category="events"
               />
             </Col>
