@@ -1,14 +1,10 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
-import Profile from './Profile';
-import EventDetail from './EventDetail';
-import { useSelector } from "react-redux";
-import ProfileDropdown from '../Components/ProfileDropDown';
+import BookedTicket from '../Components/BookedTicket'
 const Home = () => {
-  
   return (
     <div>
-        {/* <EventDetail/> */}
+        <BookedTicket/>
     </div>
   )
 }

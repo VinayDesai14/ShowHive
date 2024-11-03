@@ -5,16 +5,18 @@ import { apiConnector } from '../services/apiConnector';
 import { eventEndpoints } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import './EventDetail.css';
+import { useSelector } from 'react-redux';
 
 const EventDetail = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedType, setSelectedType] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('');
   const [duration, setDuration] = useState('');
+  const { token } = useSelector((state) => state.auth);
   const [formFields, setFormFields] = useState({
     location: '',
     title: '',
-    genralSeatPrice: '',
+    generalSeatPrice: '',
     vipSeatPrice: '',
     generalSeats: '',
     vipSeats: '',
@@ -44,10 +46,10 @@ const EventDetail = () => {
       const formData = new FormData();
       formData.append('location', formFields.location);
       formData.append('title', formFields.title);
-      formData.append('genralSeatPrice', formFields.priceGen);
-      formData.append('vipSeatPrice', formFields.priceVIP);
-      formData.append('generalSeats', formFields.genTickets);
-      formData.append('vipSeats', formFields.vipTickets);
+      formData.append('generalSeatPrice', formFields.generalSeatPrice);
+      formData.append('vipSeatPrice', formFields.vipSeatPrice);
+      formData.append('generalSeats', formFields.generalSeats);
+      formData.append('vipSeats', formFields.vipSeats);
       formData.append('language', formFields.language);
       formData.append('artist', formFields.artist);
       formData.append('dateAndTime', selectedDate);
@@ -58,12 +60,13 @@ const EventDetail = () => {
       if (formFields.image) {
         formData.append('image', formFields.image);
       }
-
+        console.log("formdata ",formData)
       const response = await apiConnector(
         'POST',
         eventEndpoints.CREATEEVENT_API,
         formData,
-        { 'Content-Type': 'multipart/form-data' }
+        { 'Content-Type': 'mutlipart/form-data' ,
+          Authorization:`Bearer ${token}`}
       );
 
       if (response.status === 200) {
@@ -102,7 +105,7 @@ const EventDetail = () => {
 
         <div className="eventInput">
           <label>Ticket Price (General):</label>
-          <input type="text" id="genralSeatPrice" placeholder="Enter your ticket price (Gen)" value={formFields.genralSeatPrice} onChange={handleChange} />
+          <input type="text" id="generalSeatPrice" placeholder="Enter your ticket price (Gen)" value={formFields.generalSeatPrice} onChange={handleChange} />
         </div>
 
         <div className="eventInput">

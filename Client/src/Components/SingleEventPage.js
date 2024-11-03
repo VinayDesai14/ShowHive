@@ -71,7 +71,7 @@ const SingleEventPage = (category) => {
       <div className='event-detail'>
         <h2>{event.title} by {event.artist}</h2>
         <p> <span>{event.type}</span> | <span>{event.language}</span> | <span>{event.duration} Hours</span></p>
-        <p><span>{formatDate(event.dateAndTime)}</span> | <span><FaLocationDot /></span> <span>{event.location}</span> | <span>Rs.{event.genralSeatPrice} onwards</span></p>
+        <p><span>{formatDate(event.dateAndTime)}</span> | <span><FaLocationDot /></span> <span>{event.location}</span> | <span>Rs.{event.generalSeatPrice} onwards</span></p>
         <button className="btn btn-primary" onClick={handleShow}>Book</button>
       </div>
 

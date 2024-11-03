@@ -36,21 +36,22 @@ const Profile = () => {
                 </label>
               </Card.Body>
             </Card>
-            <p>Welcome to ShowHive!</p>
+            <h4>Welcome to ShowHive!</h4>
           </div>
-        <h2>Account Details</h2>
         <p>Email Address: </p>
       </div>
-      <div className="personalDetails">
+      <div className="eventDetails">
         <h3>Personal Details</h3>
-        <label>
-          First Name:<input type="text" name="firstName" id="firstName" placeholder='Enter your First Name' />
-        </label>
-        <label>
-          Last Name:<input type="text" name="LastName" id="LastName" placeholder='Enter your Last Name' />
-        </label>
-        <label>
-          Birth Date:
+        <div className="eventInput">
+          <label>First Name:</label>
+          <input type="text" id="firstName" placeholder="Enter your First Name"/>
+        </div>
+        <div className="eventInput">
+          <label>Last Name:</label>
+          <input type="text" id="lastName" placeholder="Enter your Last Name"/>
+        </div>
+        <div className="eventInput">
+        <label>BirthDate:</label>
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
@@ -60,17 +61,17 @@ const Profile = () => {
             showPopperArrow={false}
             autoComplete="off"
           />
-        </label>
-        <label>
-          Gender:
+        </div>
+        <div className="eventInput">
+        <label>Gender:</label>
           <input type="radio" name="gender" value="male" id="gender" />Male
           <input type="radio" name="gender" value="female" id="gender-f" />Female
-        </label>
-        <label>
-          Marital Status:
+        </div>
+        <div className="eventInput">
+          <label>Marital Status:</label>
           <input type="radio" name="maritalstatus" value="yes" id="maritalStatus" />Yes
           <input type="radio" name="maritalstatus" value="no" id="maritalStatus" />No
-        </label>
+        </div>
       </div>
     </div>
   );

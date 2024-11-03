@@ -1,0 +1,67 @@
+.booked-ticket-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.booked-ticket-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 300px; /* Fixed width */
+    height: 450px; /* Fixed height */
+    cursor: pointer;
+}
+
+.booked-ticket-card:hover{
+    box-shadow: 4px 4px 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+.img {
+    width: 100%;
+    height: 85%;
+    overflow: hidden;
+}
+
+.img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image scales nicely */
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.event-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.details-button {
+    width: 100%;
+    background-color: #333;
+    border: none;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: #fff;
+    transition: background-color 0.3s;
+}
+
+.details-button:hover {
+    background-color: #555;
+}
