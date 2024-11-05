@@ -41,6 +41,7 @@ exports.SignUp= async (req,res)=>{
 					expiresIn: "7d",
 				}
 			);
+			console.log('token created-> ',token);
 			return res.status(200).json({
 				success: true,
 				user,

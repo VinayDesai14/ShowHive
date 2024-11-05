@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { FaPlus, FaMinus } from 'react-icons/fa';  // Import icons for increment and decrement
 import { FaLocationDot } from "react-icons/fa6";
 import { eventEndpoints } from '../services/api';
 import { apiConnector } from '../services/apiConnector';
@@ -17,36 +18,24 @@ const SingleEventPage = (category) => {
   const navigate = useNavigate()
   const [event, setEvent] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [generalTickets, setGeneralTickets] = useState('');
-  const [vipTickets, setVipTickets] = useState('');
+  const [generalTickets, setGeneralTickets] = useState(0);
+  const [vipTickets, setVipTickets] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
-  const handleChangeGTicket=(e)=>{
-    const minValue = parseInt(e.target.min, 10);
-    const maxValue = parseInt(e.target.max, 10);
-    let value = parseInt(e.target.value, 10);
-    if (value < minValue) {
-      value = minValue;
-    } else if (value > maxValue) {
-      value = minValue;
-    }
-    setGeneralTickets(value);
-  }
-  const handleChangeVTicket=(e)=>{
-    const minValue = parseInt(e.target.min, 10);
-    const maxValue = parseInt(e.target.max, 10);
-    let value = parseInt(e.target.value, 10);
-    if (value < minValue) {
-      value = minValue;
-    } else if (value > maxValue) {
-      value = minValue;
-    }
-    setVipTickets(value);
-  }
+  const [generalTicketPrice,setGeneralTicketPrice]=useState(0);
+  const [vipTicketPrice,setVipTicketPrice]=useState(0);
+  // Handlers for incrementing/decrementing ticket counts
+  const incrementGeneralTickets = () => setGeneralTickets((prev) => Math.min(prev + 1, 10));
+  const decrementGeneralTickets = () => setGeneralTickets((prev) => Math.max(prev - 1, 0));
+  const incrementVipTickets = () => setVipTickets((prev) => Math.min(prev + 1, 10));
+  const decrementVipTickets = () => setVipTickets((prev) => Math.max(prev - 1, 0));
+
   useEffect(() => {
     async function fetchEventDetails() {
       try {
         const response = await apiConnector("POST", eventEndpoints.GETEVENTDETAILS_API, { id }, null, null, false);
         setEvent(response.data.reqEventDetails);
+        setGeneralTicketPrice(response.data.reqEventDetails.generalSeatPrice);
+        setVipTicketPrice(response.data.reqEventDetails.vipSeatPrice);
       } catch (error) {
         console.error('Error fetching event details:', error);
       }
@@ -55,9 +44,8 @@ const SingleEventPage = (category) => {
   }, [id, category]);
 
   useEffect(() => {
-    const generalPrice = event ? event.price : 0; // Set general ticket price
-    const vipPrice = event ? event.price * 1.5 : 0; // Set VIP ticket price (assuming 1.5x general price)
-    setTotalAmount(generalTickets * generalPrice + vipTickets * vipPrice);
+
+    setTotalAmount(generalTickets * generalTicketPrice + vipTickets * vipTicketPrice);
   }, [generalTickets, vipTickets, event]);
 
   const handleShow = () => setShowModal(true);
@@ -85,7 +73,7 @@ const SingleEventPage = (category) => {
       <div className='event-detail'>
         <h2>{event.title} by {event.artist}</h2>
         <p> <span>{event.type}</span> | <span>{event.language}</span> | <span>{event.duration} Hours</span></p>
-        <p><span>{formatDate(event.date)}</span> | <span><FaLocationDot /></span> <span>{event.location}</span> | <span>Rs.{event.price} onwards</span></p>
+        <p><span>{formatDate(event.dateAndTime)}</span> | <span><FaLocationDot /></span> <span>{event.location}</span> | <span>Rs.{event.genralSeatPrice} onwards</span></p>
         <button className="btn btn-primary" onClick={handleShow}>Book</button>
       </div>
 
@@ -95,25 +83,24 @@ const SingleEventPage = (category) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
+            {/* General Tickets Input with Increment and Decrement */}
             <Form.Group controlId="generalTickets">
-              <Form.Label>General Tickets</Form.Label>
-              <Form.Control
-                type="number"
-                min="0"
-                max="10"
-                value={generalTickets}
-                onChange={handleChangeGTicket}
-              />
+              <Form.Label>General Ticket Price : Rs {generalTicketPrice}</Form.Label>
+              <div className="ticket-counter">
+                <Button variant="outline-secondary" onClick={decrementGeneralTickets}><FaMinus /></Button>
+                <span className="ticket-count">{generalTickets}</span>
+                <Button variant="outline-secondary" onClick={incrementGeneralTickets}><FaPlus /></Button>
+              </div>
             </Form.Group>
+
+            {/* VIP Tickets Input with Increment and Decrement */}
             <Form.Group controlId="vipTickets" className="mt-3">
-              <Form.Label>VIP Tickets</Form.Label>
-              <Form.Control
-                type="number"
-                min="0"
-                max="10"
-                value={vipTickets}
-                onChange={handleChangeVTicket}
-              />
+              <Form.Label>VIP Tickets : Rs {vipTicketPrice}</Form.Label>
+              <div className="ticket-counter">
+                <Button variant="outline-secondary" onClick={decrementVipTickets}><FaMinus /></Button>
+                <span className="ticket-count">{vipTickets}</span>
+                <Button variant="outline-secondary" onClick={incrementVipTickets}><FaPlus /></Button>
+              </div>
             </Form.Group>
           </Form>
           <div className="mt-3">

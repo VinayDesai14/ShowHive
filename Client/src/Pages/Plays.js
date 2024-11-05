@@ -51,7 +51,7 @@ const PlaysDetail = () => {
                 title={play.title}
                 Img={play.imageUrl}
                 Location={play.location}
-                price={play.price}
+                genralSeatPrice={play.genralSeatPrice}
                 category="plays"
               />
             </Col>

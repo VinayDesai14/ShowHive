@@ -62,7 +62,6 @@ export default function ProfileDropdown() {
           ref={ref}
         >
           <div onClick={() => { setOpen(false) 
-                                setIsCaretDown(true)
                                  navigate('/my-profile')}}>
             <div className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 ">
               <CgProfile  className="text-lg " />
@@ -71,22 +70,20 @@ export default function ProfileDropdown() {
           </div>
 
           <div
-            // onClick={() => {
-            //   dispatch(logout(navigate))
-            //   setOpen(false)
-            //   setIsCaretDown(true)
-            // }}
+            onClick={() => {
+              setOpen(false)
+              navigate('/create-event')
+            }}
            className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
             <IoTicketSharp  className="text-lg" />
             CreateEvent
           </div>
           <div
-            // onClick={() => {
-            //   dispatch(logout(navigate))
-            //   setOpen(false)
-            //   setIsCaretDown(true)
-            // }}
+            onClick={() => {
+              setOpen(false)
+              navigate('/my-event')
+            }}
             className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
             <MdEventAvailable className="text-lg" />
@@ -97,7 +94,6 @@ export default function ProfileDropdown() {
             onClick={() => {
               dispatch(logout(navigate))
               setOpen(false)
-              setIsCaretDown(true)
             }}
             className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >

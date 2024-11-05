@@ -1,6 +1,11 @@
 const mongoose=require('mongoose');
 
 const eventDetailsSchema=new mongoose.Schema({
+     organiser: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
+    },
      imageUrl:{
         type:String,
         required:true,
@@ -53,6 +58,12 @@ const eventDetailsSchema=new mongoose.Schema({
      vipSeatPrice:{
       type:String,
       required:true
+     },
+     generalTicketsSold:{
+      type:String,
+     },
+     vipTicketsSold:{
+      type:Int,
      },
      userEnrolled: [
         {
