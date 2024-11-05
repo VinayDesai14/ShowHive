@@ -6,9 +6,17 @@ const {
   SignUp,
   sendotp
 } = require("../controllers/Auth");
+const{
+  getUserAllSales,
+  getUserBookedTickets
+}=require('../controllers/MyEvent');
+
+const { auth  } = require("../middleware/auth")
 
 router.post("/signup", SignUp)
 router.post("/sendotp", sendotp)
-module.exports = router
+router.get('/mySales',auth,getUserAllSales);
+router.get('/bookedTickets',auth,getUserBookedTickets)
+module.exports = router;
 
 

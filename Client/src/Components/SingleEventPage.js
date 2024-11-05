@@ -21,7 +21,8 @@ const SingleEventPage = (category) => {
   const [generalTickets, setGeneralTickets] = useState(0);
   const [vipTickets, setVipTickets] = useState(0);
   const [totalAmount, setTotalAmount] = useState(0);
-
+  const [generalTicketPrice,setGeneralTicketPrice]=useState(0);
+  const [vipTicketPrice,setVipTicketPrice]=useState(0);
   // Handlers for incrementing/decrementing ticket counts
   const incrementGeneralTickets = () => setGeneralTickets((prev) => Math.min(prev + 1, 10));
   const decrementGeneralTickets = () => setGeneralTickets((prev) => Math.max(prev - 1, 0));
@@ -33,6 +34,8 @@ const SingleEventPage = (category) => {
       try {
         const response = await apiConnector("POST", eventEndpoints.GETEVENTDETAILS_API, { id }, null, null, false);
         setEvent(response.data.reqEventDetails);
+        setGeneralTicketPrice(response.data.reqEventDetails.generalSeatPrice);
+        setVipTicketPrice(response.data.reqEventDetails.vipSeatPrice);
       } catch (error) {
         console.error('Error fetching event details:', error);
       }
@@ -41,9 +44,8 @@ const SingleEventPage = (category) => {
   }, [id, category]);
 
   useEffect(() => {
-    const generalPrice = event ? event.price : 0; // Set general ticket price
-    const vipPrice = event ? event.price * 1.5 : 0; // Set VIP ticket price (assuming 1.5x general price)
-    setTotalAmount(generalTickets * generalPrice + vipTickets * vipPrice);
+
+    setTotalAmount(generalTickets * generalTicketPrice + vipTickets * vipTicketPrice);
   }, [generalTickets, vipTickets, event]);
 
   const handleShow = () => setShowModal(true);
@@ -83,7 +85,7 @@ const SingleEventPage = (category) => {
           <Form>
             {/* General Tickets Input with Increment and Decrement */}
             <Form.Group controlId="generalTickets">
-              <Form.Label>General Tickets</Form.Label>
+              <Form.Label>General Ticket Price : Rs {generalTicketPrice}</Form.Label>
               <div className="ticket-counter">
                 <Button variant="outline-secondary" onClick={decrementGeneralTickets}><FaMinus /></Button>
                 <span className="ticket-count">{generalTickets}</span>
@@ -93,7 +95,7 @@ const SingleEventPage = (category) => {
 
             {/* VIP Tickets Input with Increment and Decrement */}
             <Form.Group controlId="vipTickets" className="mt-3">
-              <Form.Label>VIP Tickets</Form.Label>
+              <Form.Label>VIP Tickets : Rs {vipTicketPrice}</Form.Label>
               <div className="ticket-counter">
                 <Button variant="outline-secondary" onClick={decrementVipTickets}><FaMinus /></Button>
                 <span className="ticket-count">{vipTickets}</span>

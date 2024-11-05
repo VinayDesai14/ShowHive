@@ -35,9 +35,10 @@ exports.createEvent= async(req,res)=>{
         const {dateAndTime,location,title,generalSeatPrice,vipSeatPrice,
             duration,language,artist,type,category,generalSeats,vipSeats}=req.body;
             const image = req.files.image;
-            console.log('Request body: ', req.body);
+            const organiserId=req.user.id;
+            // console.log('Request body: ', req.body);
 
-        console.log('imageUrl ',image);
+        // console.log('imageUrl ',image);
        // Convert the dateAndTime string from "dd-mm-yyyy hh:mm" to a valid Date object
         const [datePart, timePart,zone] = dateAndTime.split(" ");
         const [day, month, year] = datePart.split("/");
@@ -45,7 +46,7 @@ exports.createEvent= async(req,res)=>{
         const formattedDateAndTime = new Date(year, month - 1, day, hours, minutes);
         // console.log('date ',date);
         // console.log('image ', image);
-        if(!image || !formattedDateAndTime || !location || !title || !generalSeatPrice || !vipSeatPrice || 
+        if( !image || !formattedDateAndTime || !location || !title || !generalSeatPrice || !vipSeatPrice || 
            !duration || !language || !artist || !type || !category || !generalSeats || !vipSeats
         ){
             return res.status(403).json({
@@ -56,9 +57,10 @@ exports.createEvent= async(req,res)=>{
         const imageUrl=await uploadImageToCloudinary(
             image,
             process.env.FOLDER_NAME
-          )
-        const response= await eventDetails.create({imageUrl:imageUrl.secure_url,dateAndTime:formattedDateAndTime,location,title,
-            generalSeatPrice,vipSeatPrice,duration,language,artist,type,category,vipSeats,generalSeats});
+          );
+          const generalTicketsSold=0,vipTicketsSold=0;
+        const response= await eventDetails.create({organiser:organiserId,imageUrl:imageUrl.secure_url,dateAndTime:formattedDateAndTime,location,title,
+            generalSeatPrice,vipSeatPrice,duration,language,artist,type,category,vipSeats,generalSeats,generalTicketsSold,vipTicketsSold});
         
         return res.status(200).json({
             success:true,
@@ -66,7 +68,7 @@ exports.createEvent= async(req,res)=>{
             message:'Event Created successfully'
         });
     } catch (error) {
-        console.error(error);
+        // console.error(error);
         return res.status(500).json({
             success:false,
             message:'something went wrong while creating Event'

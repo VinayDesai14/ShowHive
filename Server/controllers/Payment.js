@@ -2,11 +2,24 @@ const {instance} = require("../config/razorpay");
 const User = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const { default: mongoose } = require("mongoose");
-const { ticketConfirmationTemplate } = require("../mailTemplate/ticketConfirmationEmail");
+const {ticketConfirmationTemplate}=require('../mailTemplate/ticketConfirmationEmail');
 const {paymentSuccessEmail}=require('../mailTemplate/paymentSuccessEmail');
 const crypto = require("crypto");
 const EventDetails = require("../models/EventDetails");
+const QRCode = require('qrcode');
+const { v4: uuidv4 } = require('uuid');
+const { uploadImageToCloudinary } = require("../utils/imageUploader")
+const ticketId = uuidv4(); // Generates a unique ticket ID
 
+//Generating QR CODE
+async function generateQRCodeURL(eventId, userId) {
+    const ticketId = uuidv4(); // Generate unique ticket ID
+    const ticketData = JSON.stringify({ eventId, userId, ticketId });
+    
+    // Generate QR code as a data URL
+    const QRCodeURL = await QRCode.toDataURL(ticketData);
+    return QRCodeURL;
+}
 //initiate the razorpay order
 exports.capturePayment = async(req, res) => {
 
@@ -89,14 +102,23 @@ const addTicketsinUser = async(eventId,userId) => {
         const enrolledEvent=await EventDetails.findByIdAndUpdate(eventId,
             {$push:{
                 userEnrolled: userId,
-            }},{new:true})
-        ///bachhe ko mail send kardo
+            }},{new:true});
+
+            const QRCodeURL = await generateQRCodeURL(eventId, userId);
+            const QRCodeImageUrl=await uploadImageToCloudinary(
+                QRCodeURL,
+                process.env.FOLDER_NAME
+              );
+        ///User ko mail send kardo
+        // console.log('QR CODE URL-> ',QRCodeURL)
+        // console.log('split method-> ', `data:image/png;base64,${QRCodeURL.split(',')[1]}`)
+       
         const emailResponse = await mailSender(
-            addTicketsinUser.email,
+            userDetails.email,
             `Successfully Purchased ticket of  ${enrolledEvent.title}`,
-            ticketConfirmationTemplate(eventDetails.title,eventDetails.date,eventDetails.location,QRCodeURL)
+            ticketConfirmationTemplate(enrolledEvent.title,enrolledEvent.date,enrolledEvent.location,QRCodeImageUrl.secure_url)
         )    
-        //console.log("Email Sent Successfully", emailResponse.response);
+        console.log("Email Sent Successfully", emailResponse.response);
         }
         catch(error) {
             console.log(error);
@@ -117,7 +139,7 @@ exports.sendPaymentSuccessEmail = async(req, res) => {
 
     try{
         //student ko dhundo
-        const enrolledUser = await User.findById(userId).populate('Profile').exec();
+        const enrolledUser = await User.findById(userId).exec();
         // const userProfile = await Profile.findById(enrolledUser.profileDetails)
         await mailSender(
             enrolledUser.email,

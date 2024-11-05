@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { apiConnector } from '../services/apiConnector';
@@ -13,6 +13,8 @@ const EventDetail = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [duration, setDuration] = useState('');
   const { token } = useSelector((state) => state.auth);
+  const [imageFile, setImageFile] = useState(null);
+  const fileInputRef = useRef(null);
   const [formFields, setFormFields] = useState({
     location: '',
     title: '',
@@ -37,40 +39,55 @@ const EventDetail = () => {
   };
 
   const handleFileChange = (e) => {
-    setFormFields({ ...formFields, poster: e.target.files[0] });
+    const file = e.target.files[0];
+    // console.log(file)
+    if (file) {
+      setImageFile(file);
+    }
   };
 
   const handleCreate = async () => {
     try {
-      // Create FormData for file upload
-      const formData = new FormData();
-      formData.append('location', formFields.location);
-      formData.append('title', formFields.title);
-      formData.append('generalSeatPrice', formFields.generalSeatPrice);
-      formData.append('vipSeatPrice', formFields.vipSeatPrice);
-      formData.append('generalSeats', formFields.generalSeats);
-      formData.append('vipSeats', formFields.vipSeats);
-      formData.append('language', formFields.language);
-      formData.append('artist', formFields.artist);
-      formData.append('dateAndTime', selectedDate);
-      formData.append('type', selectedType);
-      formData.append('category', selectedCategory);
-      formData.append('duration', duration);
-
-      if (formFields.image) {
-        formData.append('image', formFields.image);
+      const token = localStorage.getItem("token"); // Retrieve token from local storage
+  
+      if (!token) {
+        alert("No token found. Please log in again.");
+        return;
       }
-        console.log("formdata ",formData)
-      const response = await apiConnector(
-        'POST',
-        eventEndpoints.CREATEEVENT_API,
-        formData,
-        { 'Content-Type': 'mutlipart/form-data' ,
-          Authorization:`Bearer ${token}`}
-      );
-
+  
+      const formData = new FormData();
+      formData.append("location", formFields.location);
+      formData.append("title", formFields.title);
+      formData.append("generalSeatPrice", formFields.generalSeatPrice);
+      formData.append("vipSeatPrice", formFields.vipSeatPrice);
+      formData.append("generalSeats", formFields.generalSeats);
+      formData.append("vipSeats", formFields.vipSeats);
+      formData.append("language", formFields.language);
+      formData.append("artist", formFields.artist);
+      const formattedDateAndTime = selectedDate.toLocaleDateString('en-GB') + ' ' + selectedDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      formData.append("dateAndTime", formattedDateAndTime);
+      formData.append("type", selectedType);
+      formData.append("category", selectedCategory);
+      formData.append("duration", duration);
+      formData.append("image", imageFile);
+      console.log("formdata", formData)
+      console.log(formattedDateAndTime);
+      // Append image if it exists
+      // console.log('image ',formFields.image)
+      // if (formFields.image) {
+      //   console.log('image ',formFields.image)
+      //   formData.append("image", formFields.image);
+      // }
+  
+      const response = await apiConnector("POST", eventEndpoints.CREATEEVENT_API,formData, {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      });
+  
       if (response.status === 200) {
-        alert("successfully created")
+        alert("Event created successfully");
+        navigate('/');
+        // navigate("/your-events-page"); // Replace with your redirect page
       }
     } catch (error) {
       console.error("Error creating event:", error);
@@ -79,7 +96,7 @@ const EventDetail = () => {
   };
 
   const getCategories = () => {
-    switch (selectedType) {
+    switch (selectedCategory) {
       case 'Music': return ["Hip-Hop and Rap", "Classical", "Bollywood", "Pop", "Folk", "Devotional"];
       case 'Events': return ["Comedy Shows", "Kids", "Meetups", "Talks", "Screening", "Spirituality", "Award Shows"];
       case 'Plays': return ["Theatre", "Storytelling", "Monologue", "Mime"];
@@ -144,7 +161,7 @@ const EventDetail = () => {
 
         <div className="eventInput">
           <label>Categories:</label>
-          <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
+          <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
             <option value="">Select Categories</option>
             {["Music", "Events", "Plays", "Sports"].map((type) => (
               <option key={type} value={type}>{type}</option>
@@ -152,10 +169,10 @@ const EventDetail = () => {
           </select>
         </div>
 
-        {selectedType && (
+        {selectedCategory && (
           <div className="eventInput">
             <label>Types:</label>
-            <select value={selectedCategory} onChange={(e) => setSelectedCategory(e.target.value)}>
+            <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)}>
               <option value="">Select Types</option>
               {getCategories().map((category) => (
                 <option key={category} value={category}>{category}</option>
@@ -177,11 +194,11 @@ const EventDetail = () => {
         <div className="eventInput">
           <label>Poster:</label>
           <input
-            type="file"
-            id="upload-input"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
+                type="file"
+                ref={fileInputRef}
+                onChange={handleFileChange}
+                accept="image/png, image/gif, image/jpeg"
+              />
         </div>
 
         <div className="eventInput" style={{ justifyContent: 'center', alignContent: 'center' }}>
