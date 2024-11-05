@@ -1,0 +1,68 @@
+.my-sales-card {
+    display: flex;
+    flex-direction: row; /* Arrange items in a row */
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px; /* Wider card */
+    height: 150px; /* Shorter height */
+    margin: 20px auto;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.my-sales-card:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.my-sales-card h2 {
+    font-size: 1.2rem;
+    color: #343a40;
+    margin: 0;
+    width: 500px;
+}
+
+.my-sales-card p {
+    font-size: 1rem;
+    color: #6c757d;
+    margin: 0;
+}
+
+.view-detail {
+    color: #007bff;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    margin-left: auto; /* Push view detail to the far right */
+}
+
+.view-detail:hover {
+    text-decoration: underline;
+}
+
+#example-collapse-text {
+    background-color: #e9ecef;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    color: #495057;
+    max-width: 1000px; /* Match card width */
+    margin: 10px auto; /* Center the collapse content */
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+#example-collapse-text:hover{
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.collapseDetail{
+    max-width: 400px;
+    font-weight: 700;
+    padding: 0.3rem;
+}

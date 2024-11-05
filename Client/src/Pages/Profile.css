@@ -6,6 +6,7 @@
     overflow: hidden;
     gap:2rem;
     background-color: rgb(240, 239, 239);
+    padding: 2rem;
 }
 .accDetails{
     margin-bottom: 2rem;
