@@ -92,12 +92,12 @@ exports.ticketConfirmationTemplate = (eventName, eventDate, venue, QRCodeURL) =>
       
                   <!-- QR Code Section -->
                   <div class="qr-code">
-                      <img src="data:image/png;base64,${QRCodeURL.split(',')[1]}" alt="QR Code">
+                      <img src="${QRCodeURL}" alt="QR Code">
                   </div>
       
                   <!-- Button to View Ticket -->
                   <div style="text-align: center;">
-                      <a href="data:image/png;base64,${QRCodeURL.split(',')[1]}" class="button">View Ticket Online</a>
+                      <a href="${QRCodeURL}" class="button">View Ticket Online</a>
                   </div>
               </div>
       

@@ -22,7 +22,7 @@ function loadScript(src) {
 }
 
 
-export async function buyEvent(token, event, totalAmount,userDetails, navigate, dispatch) {
+export async function buyEvent(token, event, totalAmount,generalTickets,vipTickets,userDetails, navigate, dispatch) {
     // const toastId = toast.loading("Loading...");
     try{
         //load the script
@@ -61,7 +61,7 @@ export async function buyEvent(token, event, totalAmount,userDetails, navigate, 
                 //send successful wala mail
                 sendPaymentSuccessEmail(response, orderResponse.data.message.amount,token );
                 //verifyPayment
-                verifyPayment({...response, event}, token, navigate, dispatch);
+                verifyPayment({...response, event,generalTickets,vipTickets}, token, navigate, dispatch);
             }
         }
         //miss hogya tha 

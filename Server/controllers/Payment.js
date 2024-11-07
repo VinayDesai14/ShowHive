@@ -59,7 +59,8 @@ exports.verifyPayment = async(req, res) => {
     const razorpay_signature = req.body?.razorpay_signature;
     const event = req.body?.event;
     const userId = req.user.id;
-
+    const generalTickets=req.body?.generalTickets;
+    const vipTickets=req.body?.vipTickets;
     if(!razorpay_order_id ||
         !razorpay_payment_id ||
         !razorpay_signature || !event || !userId) {
@@ -74,16 +75,17 @@ exports.verifyPayment = async(req, res) => {
 
         if(expectedSignature === razorpay_signature) {
             //enroll karwao student ko
-            await addTicketsinUser(event, userId, res);
+          return addTicketsinUser(event, userId, res,generalTickets,vipTickets);
             //return res
-            return res.status(200).json({success:true, message:"Payment Verified"});
+            // return res.status(200).json({success:true, message:"Payment Verified"});
         }
-        return res.status(200).json({success:"false", message:"Payment Failed"});
+        else
+        return res.status(400).json({success:"false", message:"Payment Failed"});
 
 }
 
 
-const addTicketsinUser = async(eventId,userId) => {
+const addTicketsinUser = async(eventId,userId,res,generalTickets,vipTickets) => {
 
     if(!eventId || !userId) {
         return res.status(400).json({success:false,message:"Please Provide data for Courses or UserId"});
@@ -92,7 +94,13 @@ const addTicketsinUser = async(eventId,userId) => {
             //find the course and enroll the student in it
         const userDetails = await User.findOneAndUpdate(
             {_id:userId},
-            {$push:{eventDetails:eventId}},
+            {$push:{
+                eventDetails:eventId,
+                purchasedTickets: { 
+                    eventId: eventId, 
+                    generalTicketsPurchased: generalTickets, 
+                    vipTicketsPurchased: vipTickets 
+                }}},
             {new:true},
         )
 
@@ -100,17 +108,23 @@ const addTicketsinUser = async(eventId,userId) => {
             return res.status(500).json({success:false,message:"Course not Found"});
         }
         const enrolledEvent=await EventDetails.findByIdAndUpdate(eventId,
-            {$push:{
+            {
+                $push:{
                 userEnrolled: userId,
-            }},{new:true});
+            },
+            $inc: {
+                generalTicketsSold: generalTickets, // Increment general tickets
+                vipTicketsSold: vipTickets         // Increment VIP tickets
+            }
+          },{new:true});
 
-            const QRCodeURL = await generateQRCodeURL(eventId, userId);
+          const QRCodeURL = await generateQRCodeURL(eventId, userId);
             const QRCodeImageUrl=await uploadImageToCloudinary(
                 QRCodeURL,
                 process.env.FOLDER_NAME
               );
         ///User ko mail send kardo
-        // console.log('QR CODE URL-> ',QRCodeURL)
+        console.log('QR CODE URL-> ',QRCodeImageUrl)
         // console.log('split method-> ', `data:image/png;base64,${QRCodeURL.split(',')[1]}`)
        
         const emailResponse = await mailSender(
@@ -118,10 +132,11 @@ const addTicketsinUser = async(eventId,userId) => {
             `Successfully Purchased ticket of  ${enrolledEvent.title}`,
             ticketConfirmationTemplate(enrolledEvent.title,enrolledEvent.date,enrolledEvent.location,QRCodeImageUrl.secure_url)
         )    
-        console.log("Email Sent Successfully", emailResponse.response);
+        console.log("Email Sent Successfully->", emailResponse.response);
+        return res.status(200).json({success:true, message:"Payment Verified"});
         }
         catch(error) {
-            console.log(error);
+            console.log('error-> ',error);
             return res.status(500).json({success:false, message:error.message});
         }
     
