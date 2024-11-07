@@ -16,9 +16,6 @@ const EventDetails = () => {
         <Col lg={3} md={4} sm={6}><Card/></Col>
         <Col lg={3} md={4} sm={6}><Card/></Col>
         <Col lg={3} md={4} sm={6}><Card/></Col>
-        <Col lg={3} md={4} sm={6}><Card/></Col>
-        <Col lg={3} md={4} sm={6}><Card/></Col>
-        <Col lg={3} md={4} sm={6}><Card/></Col>
       </Row>
     </div>
     
