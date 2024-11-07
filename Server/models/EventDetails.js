@@ -60,10 +60,12 @@ const eventDetailsSchema=new mongoose.Schema({
       required:true
      },
      generalTicketsSold:{
-      type:String,
+      type: Number,
+      default: 0
      },
      vipTicketsSold:{
-      type:Int,
+      type:Number,
+      default: 0
      },
      userEnrolled: [
         {
