@@ -13,6 +13,7 @@ const EventDetail = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [duration, setDuration] = useState('');
   const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
   const [imageFile, setImageFile] = useState(null);
   const fileInputRef = useRef(null);
   const [formFields, setFormFields] = useState({
@@ -70,6 +71,7 @@ const EventDetail = () => {
       formData.append("category", selectedCategory);
       formData.append("duration", duration);
       formData.append("image", imageFile);
+      formData.append("organiserId", user._id);
       console.log("formdata", formData)
       console.log(formattedDateAndTime);
       // Append image if it exists

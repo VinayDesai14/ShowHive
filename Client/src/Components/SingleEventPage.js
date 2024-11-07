@@ -52,7 +52,7 @@ const SingleEventPage = (category) => {
   const handleClose = () => setShowModal(false);
   const handlePayment=()=> {
     if (token) {
-      buyEvent(token, id, totalAmount,user, navigate, dispatch)
+      buyEvent(token, id, totalAmount,generalTickets,vipTickets,user, navigate, dispatch)
       return
     }
   }

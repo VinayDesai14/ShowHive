@@ -14,6 +14,23 @@ const userSchema= new mongoose.Schema({
     image:{
         type:String,
     },
+    purchasedTickets: [
+        {
+            eventId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "eventDetails",
+                required: true
+            },
+            generalTicketsPurchased: {
+                type: Number,
+                default: 0
+            },
+            vipTicketsPurchased: {
+                type: Number,
+                default: 0
+            }
+        }
+    ],
     eventDetails:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"eventDetails",

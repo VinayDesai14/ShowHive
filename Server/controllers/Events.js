@@ -33,9 +33,9 @@ exports.createEvent= async(req,res)=>{
 
     try {
         const {dateAndTime,location,title,generalSeatPrice,vipSeatPrice,
-            duration,language,artist,type,category,generalSeats,vipSeats}=req.body;
+            duration,language,artist,type,category,generalSeats,vipSeats,organiserId}=req.body;
             const image = req.files.image;
-            const organiserId=req.user.id;
+            // const organiserId=req.user.id;
             // console.log('Request body: ', req.body);
 
         // console.log('imageUrl ',image);
@@ -58,9 +58,9 @@ exports.createEvent= async(req,res)=>{
             image,
             process.env.FOLDER_NAME
           );
-          const generalTicketsSold=0,vipTicketsSold=0;
+        //   const generalTicketsSold=0,vipTicketsSold=0;
         const response= await eventDetails.create({organiser:organiserId,imageUrl:imageUrl.secure_url,dateAndTime:formattedDateAndTime,location,title,
-            generalSeatPrice,vipSeatPrice,duration,language,artist,type,category,vipSeats,generalSeats,generalTicketsSold,vipTicketsSold});
+            generalSeatPrice,vipSeatPrice,duration,language,artist,type,category,vipSeats,generalSeats});
         
         return res.status(200).json({
             success:true,
@@ -68,7 +68,7 @@ exports.createEvent= async(req,res)=>{
             message:'Event Created successfully'
         });
     } catch (error) {
-        // console.error(error);
+        console.error(error);
         return res.status(500).json({
             success:false,
             message:'something went wrong while creating Event'

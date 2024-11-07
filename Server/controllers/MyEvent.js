@@ -30,8 +30,12 @@ exports.getUserBookedTickets=async (req,res)=>{
 
     try {
        const {userId}=req.body;
-
-       const userBookedTickets=await User.findById(userId).populate("eventDetails").exec();
+        // console.log('user id ',userId);
+       const userBookedTickets=await User.findById(userId).populate({
+        path: 'purchasedTickets.eventId',
+        model: 'eventDetails'
+    })
+    .exec();
 
     return res.status(200).json({
         success:true,
