@@ -1,3 +1,4 @@
+/* Main Card Styling */
 .my-sales-card {
     display: flex;
     flex-direction: row; /* Arrange items in a row */
@@ -8,7 +9,7 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 1000px; /* Wider card */
-    height: 150px; /* Shorter height */
+    height: 150px; 
     margin: 20px auto;
     transition: transform 0.3s ease;
     cursor: pointer;
@@ -32,37 +33,47 @@
     margin: 0;
 }
 
+/* Flex container for the row layout with View Details */
+.my-sales-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
 .view-detail {
     color: #007bff;
     font-weight: bold;
     cursor: pointer;
-    text-align: center;
-    margin-left: auto; /* Push view detail to the far right */
+    text-align: right;
 }
 
 .view-detail:hover {
     text-decoration: underline;
 }
 
-#example-collapse-text {
+/* Collapse Content Styling */
+.collapse-content {
+    display: block;
     background-color: #e9ecef;
     padding: 15px;
     border-radius: 8px;
     margin-top: 10px;
     color: #495057;
     max-width: 1000px; /* Match card width */
-    margin: 10px auto; /* Center the collapse content */
+    margin: 0 auto; /* Center the collapse content */
     transition: transform 0.3s ease;
     cursor: pointer;
 }
 
-#example-collapse-text:hover{
+.collapse-content:hover {
     transform: scale(1.02);
     cursor: pointer;
 }
 
-.collapseDetail{
-    max-width: 400px;
+/* Details inside Collapse */
+.collapseDetail {
     font-weight: 700;
-    padding: 0.3rem;
+    padding: 0.3rem 0;
+    color: #495057;
 }
