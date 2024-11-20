@@ -13,7 +13,7 @@ export const eventEndpoints = {
     GETALLPLAYS_API:BASE_URL+"/getPlays",
     GETALLSPORTS_API:BASE_URL+"/getSports",
     GETEVENTDETAILS_API:BASE_URL+"/getEventDetails",
-    GETUSERALLSALES_API:BASE_URL+"/mysales",
+    GETUSERALLSALES_API:BASE_URL+"/mySales",
     GETUSERBOOKEDTICKETS_API:BASE_URL+"/bookedTickets",
 }
 

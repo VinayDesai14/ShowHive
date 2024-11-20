@@ -17,11 +17,11 @@ const MySalesTicket = () => {
   useEffect(() => {
     async function fetchEventDetails() {
       try {
-        const response = await apiConnector("GET", eventEndpoints.GETUSERALLSALES_API, { id }, {Authorization: `Bearer ${token}`,}, null, false);
-        //console.log("Organiser response: ", response);
+        const response = await apiConnector("POST", eventEndpoints.GETUSERALLSALES_API, { id }, {Authorization: `Bearer ${token}`,}, null, false);
+        console.log("Organiser response: ", response);
         setEvents(response.data.organiserEvents); // Assuming the response returns an array called organiserEvents
       } catch (error) {
-        console.error('Error fetching event details:', error);
+        console.error('Error while fetching event details:', error);
       }
     }
     fetchEventDetails();

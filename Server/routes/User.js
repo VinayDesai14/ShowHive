@@ -15,7 +15,7 @@ const { auth  } = require("../middleware/auth")
 
 router.post("/signup", SignUp)
 router.post("/sendotp", sendotp)
-router.get('/mySales',auth,getUserAllSales);
+router.post('/mySales',auth,getUserAllSales);
 router.get('/bookedTickets',auth,getUserBookedTickets)
 module.exports = router;
 

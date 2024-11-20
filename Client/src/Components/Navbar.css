@@ -4,7 +4,7 @@ nav.navbar {
   top: 0;
   z-index: 1;
   transition: 0.32s ease-in-out;
-  background: rgb(238, 233, 233);
+  background: rgb(255, 255, 255);
 }
 .container {
   display: flex;

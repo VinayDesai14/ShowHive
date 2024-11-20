@@ -1,0 +1,117 @@
+.carContainer {
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.carousel {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.carousel a{
+    z-index: 0 !important;
+}
+
+.carousel img {
+    width: 100% !important;
+    height: 500px !important;
+    object-fit: cover;
+    border-radius: 15px;
+}
+
+/* Style the arrow buttons */
+.carousel-control-prev, .carousel-control-next {
+    width: auto;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: white !important; /* White circular background */
+    border-radius: 50%; /* Circular shape */
+    width: 40px !important; /* Set size for circular button */
+    height: 40px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    position: relative !important;
+}
+
+/* Create a black arrow icon */
+.carousel-control-prev-icon::after, .carousel-control-next-icon::after {
+    content: ''; /* Custom arrow using pseudo-element */
+    display: inline-block;
+    width: 10px; /* Arrow width */
+    height: 10px; /* Arrow height */
+    border: solid black; /* Black color for the arrow */
+    border-width: 0 2px 2px 0; /* Only display two borders to create an arrow */
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) rotate(45deg); /* Center and rotate */
+}
+
+/* Rotate arrows for correct direction */
+.carousel-control-prev-icon::after {
+    transform: translate(-50%, -50%) rotate(135deg); /* Left arrow */
+}
+
+.carousel-control-next-icon::after {
+    transform: translate(-50%, -50%) rotate(-45deg); /* Right arrow */
+}
+
+@media (max-width:1200px){
+    .carContainer {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px 0;
+        height: 80vh;
+    }
+    
+    .carousel {
+        max-width: 800px;
+    }
+}
+
+@media (max-width:1000px){
+    .carContainer {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px 0;
+        height: 80vh;
+    }
+    
+    .carousel {
+        max-width: 600px;
+    }
+}
+
+@media (max-width:600px){
+    .carContainer {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px 0;
+        height: 80vh;
+    }
+    
+    .carousel {
+        max-width: 400px;
+    }
+}
+
+@media (max-width:400px){
+    .carContainer {
+        max-width: 380px;
+        margin: 0 auto;
+        padding: 20px 0;
+        height: 80vh;
+    }
+    
+    .carousel {
+        max-width: 300px;
+    }
+}

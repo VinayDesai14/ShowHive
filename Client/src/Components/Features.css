@@ -1,0 +1,98 @@
+.eventContainer {
+    background-color: #ffffff; /* Light background color */
+    padding: 40px 20px;
+    /* border-radius: 15px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); */
+    text-align: center;
+}
+
+.title h2 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Optional underline effect for title */
+.title h2::after {
+    content: "";
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #ff6b6b; /* Accent color */
+    margin: 10px auto;
+    border-radius: 5px;
+}
+
+.main-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    padding:50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap; /* Responsive: wraps content on smaller screens */
+}
+
+.photo img {
+    height: 450px;
+    width: 500px;
+    margin-right: 20px;
+    object-fit: cover;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    transition: transform 0.3s ease-in-out; /* Animation */
+}
+
+.photo img:hover {
+    transform: scale(1.05); /* Slight zoom on hover */
+}
+
+.txt {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    max-width: 400px;
+}
+
+.txt ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.txt li {
+    padding: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #555;
+    font-size: 1.2rem;
+}
+
+/* Custom bullet icons */
+.txt li::before {
+    content: "✓"; /* Custom checkmark icon */
+    color: #ff6b6b; /* Accent color */
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .main-body {
+        flex-direction: column;
+    }
+
+    .photo img {
+        height: 300px;
+        width: 300px;
+    }
+
+    .txt {
+        font-size: 1.2rem;
+    }
+}
