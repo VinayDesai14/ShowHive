@@ -22,7 +22,7 @@ const MySalesTicket = () => {
         console.log("Organiser response: ", response.data.organiserEvents);
         setEvents(response.data.organiserEvents); // Assuming the response returns an array called organiserEvents
       } catch (error) {
-        console.error('Error fetching event details:', error);
+        console.error('Error while fetching event details:', error);
       }
     }
     fetchEventDetails();

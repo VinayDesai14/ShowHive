@@ -1,0 +1,23 @@
+.eventContainer-topCategories{
+    margin: 2rem;
+}
+
+.card{
+    border: 0px !important;
+}
+
+/* .eventContainer-topCategories h2{
+    font-size: x-large;
+} */
+
+.eventContainer-topCategories img{
+    width: 50rem !important;
+    height: 12rem !important;
+    border-radius: 1.5rem;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+
+.eventContainer-topCategories img:hover{
+    transform: scale(1.02);
+}

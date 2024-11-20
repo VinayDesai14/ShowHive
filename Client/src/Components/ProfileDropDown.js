@@ -9,6 +9,7 @@ import { setUser } from "../Slices/profileSlice"
 import { MdEventAvailable } from "react-icons/md";
 import { IoTicketSharp } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
+// import './ProfileDropDown.css';
 // import { logout } from "../../../services/operations/authAPI"
 
 export default function ProfileDropdown() {
@@ -47,8 +48,8 @@ export default function ProfileDropdown() {
     }
 
   return (
-    <button className="relative arrow-button" onClick={handleOnClick}>
-      <div className="flex items-center gap-x-1" >
+    <button className="z-20 relative arrow-button" onClick={handleOnClick}>
+      <div className="z-20 flex items-center gap-x-1" >
         <img
           src={user?.image}
           alt={`profile-${user?.firstName}`}
@@ -58,7 +59,7 @@ export default function ProfileDropdown() {
       {open && (
         <div
           onClick={(e) => e.stopPropagation()}
-          className="absolute w-[200px] top-[118%]  right-[50%] z-[1000] divide-y-[1px] divide-richblack-25 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-white"
+          className=" dropdownBtn absolute w-[200px] top-[118%]  right-[50%] z-[1000] divide-y-[1px] divide-richblack-25 overflow-hidden rounded-md border-[1px] border-richblack-700 bg-white"
           ref={ref}
         >
           <div onClick={() => { setOpen(false) 
@@ -84,7 +85,7 @@ export default function ProfileDropdown() {
               setOpen(false)
               navigate('/my-event')
             }}
-            className="flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
+            className="z-0 hover:z-100 flex w-full items-center gap-x-3 py-[10px] px-[18px] text-sm text-richblack-800 hover:bg-richblack-25 hover:text-richblack-900 "
           >
             <MdEventAvailable className="text-lg" />
             MyEvents
