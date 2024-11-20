@@ -30,11 +30,11 @@ const userSchema= new mongoose.Schema({
                 default: 0
             }
         }
-    ],
-    eventDetails:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"eventDetails",
-    }]
+    ]
+    // eventDetails:[{
+    //     type:mongoose.Schema.Types.ObjectId,
+    //     ref:"eventDetails",
+    // }]
 })
 
 module.exports = mongoose.model("User", userSchema);

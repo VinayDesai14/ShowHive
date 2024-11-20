@@ -31,7 +31,7 @@ exports.SignUp= async (req,res)=>{
 			});
 		}
 
-		let user= await User.findOne({email});
+		let user= await User.findOne({email})?.populate("profileDetails").exec();
 
 		if(user){
 			const token = jwt.sign(
@@ -41,7 +41,8 @@ exports.SignUp= async (req,res)=>{
 					expiresIn: "7d",
 				}
 			);
-			console.log('token created-> ',token);
+			// console.log('token created-> ',token);
+			
 			return res.status(200).json({
 				success: true,
 				user,
@@ -61,7 +62,7 @@ exports.SignUp= async (req,res)=>{
 			email,
 			profileDetails: profileDetails._id,
 			image: `https://api.dicebear.com/5.x/initials/svg?seed=${profileDetails.firstName || 'Anonymous'}&${profileDetails.lastName || 'User'}`,
-		});
+		})?.populate("profileDetails").exec();
 
 		const token = jwt.sign(
 			{ email: user.email, id: user._id},

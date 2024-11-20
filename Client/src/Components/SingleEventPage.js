@@ -108,7 +108,7 @@ const SingleEventPage = (category) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button className='closeBtn' onClick={handleClose}>
             Close
           </Button>
           <Button variant="primary" onClick={handlePayment}>

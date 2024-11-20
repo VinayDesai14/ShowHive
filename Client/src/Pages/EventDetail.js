@@ -45,6 +45,7 @@ const EventDetail = () => {
     if (file) {
       setImageFile(file);
     }
+    
   };
 
   const handleCreate = async () => {

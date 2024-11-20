@@ -1,7 +1,7 @@
 const express=require('express');
 const cors = require("cors");
 const app=express();
-
+const bodyParser = require("body-parser");
 
 const userRoutes = require("./routes/User");
 const eventsRoutes = require("./routes/events");
@@ -29,7 +29,8 @@ app.use(
 		tempFileDir:"/tmp",
 	})
 )
-
+app.use(bodyParser.json({ limit: "500mb" })); // Adjust the limit as needed
+app.use(bodyParser.urlencoded({ limit: "500mb", extended: true }));
 app.use("/api/v1", userRoutes);
 app.use("/api/v1", eventsRoutes);
 app.use("/api/v1", musicRoutes);
