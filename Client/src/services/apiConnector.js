@@ -22,7 +22,7 @@ axiosInstance.interceptors.request.use(
     (config) => {
         if (config.requiresAuth) {
             if (isTokenExpired()) {
-                 logout();
+                logout();
                 return Promise.reject(new Error('Token expired'));
             }
             const token = localStorage.getItem('token');
@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response && error.response.status === 401) {
-             logout();
+            logout();
         }
         return Promise.reject(error);
     }

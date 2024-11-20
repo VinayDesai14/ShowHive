@@ -88,3 +88,24 @@
         margin-left: 0.1rem;
     }
 }
+
+.save-btn {
+    background-color: #28a745; /* Green background color */
+    color: white; /* White text color */
+    border: none; /* Remove default border */
+    padding: 10px 20px; /* Add some padding for a better appearance */
+    font-size: 16px; /* Set a readable font size */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    display: inline-block; /* Size the button to fit its content */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    margin: 0 auto; /* Center the button horizontally */
+  }
+  
+  .save-btn:hover {
+    background-color: #218838; /* Darker green on hover */
+  }
+  
+  .save-btn-wrapper {
+    text-align: center; /* Center the button container */
+  }

@@ -1,8 +1,10 @@
 .booked-ticket-container {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     padding: 2rem;
+    gap: 2rem;
 }
 
 .booked-ticket-card {
@@ -12,12 +14,15 @@
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(127, 255, 115, 0.63);
     overflow: hidden;
     width: 300px; /* Fixed width */
     height: 450px; /* Fixed height */
     cursor: pointer;
 }
+/* .detailsBtn{
+    color: blue;
+} */
 
 .booked-ticket-card:hover{
     box-shadow: 4px 4px 6px 6px rgba(0, 0, 0, 0.1);
@@ -54,7 +59,7 @@
 
 .details-button {
     width: 100%;
-    background-color: #333;
+    background-color: #ff2121;
     border: none;
     padding: 0.5rem;
     font-size: 0.9rem;
@@ -65,3 +70,75 @@
 .details-button:hover {
     background-color: #555;
 }
+
+/* BookedTicket.css */
+.booked-ticket-container {
+    display: grid;
+    gap: 16px; /* Space between cards */
+  }
+  
+  .booked-ticket-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* .img img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ddd;
+  } */
+  
+  .details {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .details span {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  /* Responsive layout */
+  @media (min-width: 1200px) {
+    .booked-ticket-container {
+      grid-template-columns: repeat(4, 1fr); /* 4 cards per row on large screens */
+      display: grid;
+      flex-direction:row ;
+      justify-content: space-around;
+    }
+  }
+  
+  @media (min-width: 1000px) and (max-width: 1199px) {
+    .booked-ticket-container {
+      grid-template-columns: repeat(3, 1fr); /* 3 cards per row on medium screens */
+      display: grid;
+      flex-direction:row ;
+      justify-content: space-around;
+    }
+  }
+  
+  @media (min-width: 700px) and (max-width: 999px) {
+    .booked-ticket-container {
+        display: grid;
+      grid-template-columns: repeat(2, 1fr); /* 3 cards per row on medium screens */
+      gap: 50px; 
+    padding: 0px 5rem;
+      
+      /* flex-direction:row ;
+      justify-content: space-around; */
+    }
+  }
+
+  @media (max-width: 699px) {
+    .booked-ticket-container {
+      grid-template-columns: 1fr; /* 1 card per row on small screens */
+      display: flex;
+      flex-direction:column ;
+      justify-content: center;
+    }
+  }
+  

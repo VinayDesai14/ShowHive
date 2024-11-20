@@ -1,23 +1,30 @@
-import React from 'react'
-import Tab from 'react-bootstrap/Tab';
-import Tabs from 'react-bootstrap/Tabs';
+import { useState } from 'react';
+import { Tabs, Tab } from 'react-bootstrap';
 import BookedTicket from '../Components/BookedTicket';
 import MySalesTicket from '../Components/MySalesTicket';
-const MyEvent = () => {
+
+const MyTabs = () => {
+  const [activeTab, setActiveTab] = useState("booked tickets");
+
+  const handleSelect = (tabKey) => {
+    setActiveTab(tabKey);
+  };
+
   return (
     <Tabs
-    defaultActiveKey="booked tickets"
-    id="uncontrolled-tab-example"
-    className="mb-3"
-  >
-    <Tab eventKey="booked tickets" title="Booked Tickets">
-      <BookedTicket/>
-    </Tab>
-    <Tab eventKey="sales" title="My Sales">
-      <MySalesTicket/>
-    </Tab>
-  </Tabs>
-  )
-}
+      activeKey={activeTab}
+      onSelect={handleSelect}
+      id="uncontrolled-tab-example"
+      className="mb-3"
+    >
+      <Tab eventKey="booked tickets" title="Booked Tickets">
+        {activeTab === "booked tickets" && <BookedTicket />}
+      </Tab>
+      <Tab eventKey="sales" title="My Sales">
+        {activeTab === "sales" && <MySalesTicket />}
+      </Tab>
+    </Tabs>
+  );
+};
 
-export default MyEvent;
+export default MyTabs;

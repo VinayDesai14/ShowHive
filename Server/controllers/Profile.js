@@ -11,16 +11,33 @@ exports.updateProfile = async (req, res) => {
 		birthDate = "",
 		maritalStatus = "",
 		gender = "",
+		imageSrc,
+		id
 	  } = req.body
     //   console.log("user ",req.user)
-	  const id = req.user.id
+	//   const id = req.user.id
   
 	  // Find the profile by id
     //   console.log("id ",id)
 	  const userDetails = await User.findById(id)
 	  const profile = await Profile.findById(userDetails.profileDetails)
-  
-  
+	  
+	  let updatedProfile=null;
+	  if (imageSrc) {
+		const image = await uploadImageToCloudinary(
+			imageSrc,
+			process.env.FOLDER_NAME,
+			1000,
+			1000
+		  )
+		  console.log(image)
+		   updatedProfile = await User.findByIdAndUpdate(
+			{ _id:id},
+			{ image: image.secure_url },
+			{ new: true }
+		  )
+		// imageUrl = uploadedResponse.secure_url;
+	  }
 	  // Update the profile fields
 	  profile.birthDate = birthDate
 	  profile.gender = gender
@@ -35,11 +52,12 @@ exports.updateProfile = async (req, res) => {
 		.populate("profileDetails")
 		.exec()
   
-	  return res.json({
+	  return res.status(200).json({
 		success: true,
 		message: "Profile updated successfully",
 		updatedUserDetails,
-	  })
+		updatedProfile
+	  });
 	} catch (error) {
 	  console.log(error)
 	  return res.status(500).json({
@@ -52,7 +70,7 @@ exports.updateProfile = async (req, res) => {
 
 exports.getAllUserDetails = async (req, res) => {
 	try {
-		const id = req.user.id;
+		const {id} = req.body;
 		const userDetails = await User.findById(id)
 			.populate("profileDetails")
 			.exec();

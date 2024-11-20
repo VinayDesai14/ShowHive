@@ -1,12 +1,13 @@
 const eventDetails=require('../models/EventDetails');
 const User= require('../models/User');
-
+const mongoose=require('mongoose');
 exports.getUserAllSales=async (req,res)=>{
 
     try {
-       const {organiserId}=req.body;
-
-       const organiserEvents=await eventDetails.find({organiser:organiserId});
+       const {id}=req.body;
+    //    console.log('req body sales ',req.body)
+    //    console.log('organiser id ',id)
+    const organiserEvents = await eventDetails.find({ organiser: id });
     //     let totalGeneralTicketSold=0,totalVipTicketSold=0,totalAmount=0;
     //    for(let i=0;i<organiserEvents.length;i++){
     //     totalGeneralTicketSold+=organiserEvents[i].generalTicketsSold;
@@ -19,6 +20,7 @@ exports.getUserAllSales=async (req,res)=>{
         message:'Successfully fetched all the events of the organiser'
     })
     } catch (error) {
+        console.log('error ',error);
         return res.status(500).json({
             success:false,
             message:'something went wrong while fetching the events of the organiser'
@@ -29,9 +31,10 @@ exports.getUserAllSales=async (req,res)=>{
 exports.getUserBookedTickets=async (req,res)=>{
 
     try {
-       const {userId}=req.body;
-        // console.log('user id ',userId);
-       const userBookedTickets=await User.findById(userId).populate({
+       const {id}=req.body;
+    //    console.log('req body ',req.body)
+    //     console.log('user id ',id);
+       const userBookedTickets=await User.findById(id).populate({
         path: 'purchasedTickets.eventId',
         model: 'eventDetails'
     })
@@ -43,6 +46,7 @@ exports.getUserBookedTickets=async (req,res)=>{
         message:'Successfully fetched all the booked tickets of the user'
     })
     } catch (error) {
+        console.log('error ',error);
         return res.status(500).json({
             success:false,
             message:'something went wrong while fetching the booked tickets of the user'

@@ -8,7 +8,7 @@ const {
 } = require("../controllers/Profile")
 
 
-router.put("/updateProfile", auth, updateProfile)
-router.get("/getUserDetails", auth, getAllUserDetails)
+router.put("/profile/updateProfile", auth, updateProfile)
+router.post("/getUserDetails", auth, getAllUserDetails)
 router.put("/updateDisplayPicture", auth, updateDisplayPicture)
 module.exports = router

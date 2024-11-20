@@ -72,3 +72,11 @@
     width: 45px;
     text-align: center;
 }
+
+.closeBtn{
+  background-color: rgb(145, 141, 141) !important;
+}
+
+.closeBtn:hover{
+  background-color: rgb(88, 88, 88) !important;
+}

@@ -6,9 +6,9 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { apiConnector } from '../services/apiConnector';
 import { eventEndpoints } from '../services/api';
-
+import { formatDate } from '../services/formatDate';
 const BookedTicket = () => {
-  const { id } = useParams();
+  const { user } = useSelector((state) => state.profile);
   const { token } = useSelector((state) => state.auth);
   const [openModalIndex, setOpenModalIndex] = useState(null); // Track which event modal is open
   const [events, setEvents] = useState([]);
@@ -16,15 +16,18 @@ const BookedTicket = () => {
   useEffect(() => {
     async function fetchEventDetails() {
       try {
-        const response = await apiConnector("GET", eventEndpoints.GETUSERBOOKEDTICKETS_API, { id }, { Authorization: `Bearer ${token}` }, null, false);
-        // console.log("userbooked",response);
-        setEvents(response.data.userBookedTickets);
-      } catch (error) {
+        // console.log('id ',id);
+        const id=user._id;
+        console.log('id ',id);
+        const response = await apiConnector("POST", eventEndpoints.GETUSERBOOKEDTICKETS_API, { id }, { Authorization: `Bearer ${token}` }, null, false);
+        console.log("userbooked ",response.data.userBookedTickets.purchasedTickets);
+        setEvents(response.data.userBookedTickets.purchasedTickets);
+      } catch (error) { 
         console.log("Error while fetching booked-ticket details", error);
       }
     }
     fetchEventDetails();
-  }, [id, token]);
+  }, [user,token]);
 
   const handleShow = (index) => setOpenModalIndex(index);
   const handleClose = () => setOpenModalIndex(null);
@@ -36,17 +39,17 @@ const BookedTicket = () => {
   //   );
   // }
   return (
-    <>
+    <div className="booked-ticket-container">
       {events && events.map((event, index) => (
-        <div className="booked-ticket-container">
-          <div className="booked-ticket-card" key={event.id}>
+        <div>
+          <div className="booked-ticket-card" key={event.eventId._id}>
             <div className="img">
-              <img src={photo} alt="Event" />
+              <img src={event.eventId.imageUrl} alt="Event" />
             </div>
             <div className="details">
-              <span>{event.title}</span>
+              <span>{event.eventId.title}</span>
               <span>
-                <Button variant="dark" onClick={() => handleShow(index)}>
+                <Button  onClick={() => handleShow(index)}>
                   View Details
                 </Button>
               </span>
@@ -56,17 +59,17 @@ const BookedTicket = () => {
           {/* Modal for displaying detailed information */}
           <Modal show={openModalIndex === index} onHide={handleClose} centered>
             <Modal.Header closeButton>
-              <Modal.Title>{event.title} Details</Modal.Title>
+              <Modal.Title>{event.eventId.title} Details</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {/* <p>No. of General Tickets Booked: {event.generalTicketsBooked}</p>
-              <p>No. of VIP Tickets Booked: {event.vipTicketsBooked}</p>
-              <p>Total Price: Rs.{event.totalPrice}</p> */}
-              <p>Location: {event.location}</p>
-              <p>Artists: {event.artist}</p>
-              <p>Date: {event.dateAndTime}</p>
-              <p>Category: {event.category}</p>
-              <p>Duration: {event.duration} hours</p>
+              <p>No. of General Tickets Booked: {event.generalTicketsPurchased}</p>
+              <p>No. of VIP Tickets Booked: {event.vipTicketsPurchased}</p>
+              <p>Total Price: Rs.{(event.eventId.generalSeatPrice)*(event.generalTicketsPurchased)+(event.eventId.vipSeatPrice)*(event.vipTicketsPurchased)}</p>
+              <p>Location: {event.eventId.location}</p>
+              <p>Artists: {event.eventId.artist}</p>
+              <p>Date: {formatDate(event.eventId.dateAndTime)}</p>
+              <p>Category: {event.eventId.category}</p>
+              <p>Duration: {event.eventId.duration} hours</p>
             </Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={handleClose}>
@@ -76,7 +79,7 @@ const BookedTicket = () => {
           </Modal>
         </div>
       ))}
-    </>
+    </div>
   );
 }
 
