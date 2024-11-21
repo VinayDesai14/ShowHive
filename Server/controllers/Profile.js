@@ -11,7 +11,6 @@ exports.updateProfile = async (req, res) => {
 		birthDate = "",
 		maritalStatus = "",
 		gender = "",
-		imageSrc,
 		id
 	  } = req.body
     //   console.log("user ",req.user)
@@ -22,22 +21,22 @@ exports.updateProfile = async (req, res) => {
 	  const userDetails = await User.findById(id)
 	  const profile = await Profile.findById(userDetails.profileDetails)
 	  
-	  let updatedProfile=null;
-	  if (imageSrc) {
-		const image = await uploadImageToCloudinary(
-			imageSrc,
-			process.env.FOLDER_NAME,
-			1000,
-			1000
-		  )
-		  console.log(image)
-		   updatedProfile = await User.findByIdAndUpdate(
-			{ _id:id},
-			{ image: image.secure_url },
-			{ new: true }
-		  )
-		// imageUrl = uploadedResponse.secure_url;
-	  }
+	//   let updatedProfile=null;
+	//   if (imageSrc) {
+	// 	const image = await uploadImageToCloudinary(
+	// 		imageSrc,
+	// 		process.env.FOLDER_NAME,
+	// 		1000,
+	// 		1000
+	// 	  )
+	// 	  console.log(image)
+	// 	   updatedProfile = await User.findByIdAndUpdate(
+	// 		{ _id:id},
+	// 		{ image: image.secure_url },
+	// 		{ new: true }
+	// 	  )
+	// 	// imageUrl = uploadedResponse.secure_url;
+	//   }
 	  // Update the profile fields
 	  profile.birthDate = birthDate
 	  profile.gender = gender
@@ -51,12 +50,11 @@ exports.updateProfile = async (req, res) => {
 	  const updatedUserDetails = await User.findById(id)
 		.populate("profileDetails")
 		.exec()
-  
+	  	console.log('updated user Details-> ',updatedUserDetails);
 	  return res.status(200).json({
 		success: true,
 		message: "Profile updated successfully",
-		updatedUserDetails,
-		updatedProfile
+		updatedUserDetails
 	  });
 	} catch (error) {
 	  console.log(error)
@@ -91,25 +89,27 @@ exports.getAllUserDetails = async (req, res) => {
 exports.updateDisplayPicture = async (req, res) => {
     try {
       const displayPicture = req.files.displayPicture
-      const userId = req.user.id
+      const {id} = req.body;
       const image = await uploadImageToCloudinary(
         displayPicture,
         process.env.FOLDER_NAME,
         1000,
         1000
       )
-      console.log(image)
+      console.log('image url -> ',image.secure_url)
       const updatedProfile = await User.findByIdAndUpdate(
-        { _id: userId },
+        id,
         { image: image.secure_url },
         { new: true }
       )
-      res.send({
+	  console.log('updatedProfile -> ',updatedProfile)
+     return res.status(200).json({
         success: true,
         message: `Image Updated successfully`,
         data: updatedProfile,
       })
     } catch (error) {
+		console.log('error in updateDisplayPicture-> ',error)
       return res.status(500).json({
         success: false,
         message: error.message,

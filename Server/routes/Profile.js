@@ -9,6 +9,6 @@ const {
 
 
 router.put("/profile/updateProfile", auth, updateProfile)
-router.post("/getUserDetails", auth, getAllUserDetails)
-router.put("/updateDisplayPicture", auth, updateDisplayPicture)
+router.post("/profile/getUserDetails", auth, getAllUserDetails)
+router.put("/profile/updateDisplayPicture", auth, updateDisplayPicture) 
 module.exports = router

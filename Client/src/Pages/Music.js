@@ -26,7 +26,7 @@ const MusicDetail = () => {
           response = await axios.get(eventEndpoints.GETALLMUSIC_API);
         }
         //console.log(response.data);
-        setMusic(response.data.getAllMusicShows); // Assuming the response structure is the same
+        setMusic(response.data.getAllEvents); // Assuming the response structure is the same
       } catch (error) {
         console.error('Error fetching music details:', error);
       }
@@ -52,7 +52,7 @@ const MusicDetail = () => {
                 title={music.title}
                 Img={music.imageUrl}
                 Location={music.location}
-                genralSeatPrice={music.genralSeatPrice}
+                generalSeatPrice={music.generalSeatPrice}
                 category="music"
               />
             </Col>

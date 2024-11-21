@@ -25,7 +25,7 @@ const PlaysDetail = () => {
           // Fetch all plays by default
           response = await axios.get(eventEndpoints.GETALLPLAYS_API);
         }
-        setPlays(response.data.getAllPlays); // Assuming the response structure is similar
+        setPlays(response.data.getAllEvents); // Assuming the response structure is similar
       } catch (error) {
         console.error('Error fetching plays:', error);
       }
@@ -51,7 +51,7 @@ const PlaysDetail = () => {
                 title={play.title}
                 Img={play.imageUrl}
                 Location={play.location}
-                genralSeatPrice={play.genralSeatPrice}
+                generalSeatPrice={play.generalSeatPrice}
                 category="plays"
               />
             </Col>

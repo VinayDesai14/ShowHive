@@ -25,7 +25,7 @@ const SportsDetail = () => {
           // Fetch all sports by default
           response = await axios.get(eventEndpoints.GETALLSPORTS_API);
         }
-        setSports(response.data.getAllSports); // Assuming response structure is similar
+        setSports(response.data.getAllEvents); // Assuming response structure is similar
       } catch (error) {
         console.error('Error fetching sports details:', error);
       }
@@ -51,7 +51,7 @@ const SportsDetail = () => {
                 title={sport.title}
                 Img={sport.imageUrl}
                 Location={sport.location}
-                genralSeatPrice={sport.genralSeatPrice}
+                generalSeatPrice={sport.generalSeatPrice}
                 category="sports"
               />
             </Col>

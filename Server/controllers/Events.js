@@ -42,10 +42,23 @@ exports.createEvent= async(req,res)=>{
        // Convert the dateAndTime string from "dd-mm-yyyy hh:mm" to a valid Date object
         const [datePart, timePart,zone] = dateAndTime.split(" ");
         const [day, month, year] = datePart.split("/");
-        const [hours, minutes] = timePart.split(":");
-        const formattedDateAndTime = new Date(year, month - 1, day, hours, minutes);
+        let [hours, minutes] = timePart.split(":");
+        // const formattedDateAndTime = new Date(year, month - 1, day, hours, minutes);
         // console.log('date ',date);
         // console.log('image ', image);
+        // Convert to 24-hour format
+if (zone === "PM" && hours !== "12") {
+    hours = parseInt(hours) + 12;
+  } else if (zone === "AM" && hours === "12") {
+    hours = "0";
+  }
+  
+  // Create date in local timezone
+  const localDate = new Date(year, month - 1, day, hours, minutes);
+  
+  // Convert to UTC
+  const formattedDateAndTime = new Date(localDate.toISOString());
+  console.log(formattedDateAndTime); // "2024-11-20T14:00:00.000Z"
         if( !image || !formattedDateAndTime || !location || !title || !generalSeatPrice || !vipSeatPrice || 
            !duration || !language || !artist || !type || !category || !generalSeats || !vipSeats
         ){

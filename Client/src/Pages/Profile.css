@@ -109,3 +109,26 @@
   .save-btn-wrapper {
     text-align: center; /* Center the button container */
   }
+  .saveDiv {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center horizontally */
+    width: 100%; /* Ensure it spans the full width */
+}
+
+
+
+  .textSide{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items:center;
+    gap:1rem;
+}
+
+.emailAdd{
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items:center;
+}
+  

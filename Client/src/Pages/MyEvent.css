@@ -1,0 +1,33 @@
+/* Ensure the parent container has proper spacing */
+.tabCont {
+    margin-left: 20px; /* Add spacing from the left */
+    margin-right: 20px; /* Optional: Add spacing from the right */
+  }
+  
+  /* Style the nav-tabs to ensure they inherit the margin */
+  .nav-tabs {
+    margin-left: 0; /* Reset any Bootstrap defaults */
+  }
+  
+  /* Ensure the tabs themselves have proper alignment and spacing */
+  .nav-tabs .nav-link {
+    padding: 10px 15px; /* Adjust padding for better aesthetics */
+    margin-right: 5px; /* Space between tabs */
+    border: 1px solid #ddd; /* Optional border */
+    border-radius: 4px;
+  }
+  
+  .nav-tabs .nav-link.active {
+    background-color: #007bff; /* Active tab background */
+    color: white;
+    border-color: #007bff;
+  }
+  
+  /* Add a fallback for small screens */
+  @media (max-width: 768px) {
+    .tabCont {
+      margin-left: 10px; /* Reduce spacing on smaller devices */
+      margin-right: 10px;
+    }
+  }
+  
