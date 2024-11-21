@@ -17,28 +17,28 @@ const TopCategories = () => {
             <Col lg={3} md={4} sm={6}>
                 <div>
                 <Card>
-                <Card.Img variant="top" src={StandUpComedy} />
+                    <a href="/events"><Card.Img variant="top" src={StandUpComedy} /></a>
                 </Card>
                 </div>
             </Col>
             <Col lg={3} md={4} sm={6}>
                 <div>
                 <Card>
-                <Card.Img variant="top" src={Cricket} />
+                    <a href="/sports"> <Card.Img variant="top" src={Cricket} /></a>
                 </Card>
                 </div>
             </Col>
             <Col lg={3} md={4} sm={6}>
                 <div>
                 <Card>
-                <Card.Img variant="top" src={Music} />
+                    <a href="/music"> <Card.Img variant="top" src={Music} /></a>
                 </Card>
                 </div>
             </Col>
             <Col lg={3} md={4} sm={6}>
                 <div>
                 <Card>
-                <Card.Img variant="top" src={Gaming} />
+                    <a href="/sports"> <Card.Img variant="top" src={Gaming} /></a>
                 </Card>
                 </div>
             </Col>

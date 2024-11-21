@@ -21,3 +21,10 @@
 .eventContainer-topCategories img:hover{
     transform: scale(1.02);
 }
+
+@media (max-width:600px){
+    .cards img{
+        width: 300px;
+        height: 10px;
+    }
+}

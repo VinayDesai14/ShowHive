@@ -130,7 +130,7 @@ nav.navbar {
       border-color: transparent;
   }
 
-  @media (max-width:768px) {
+  @media (max-width:1000px) {
         .me-auto{
             margin-top: -4rem;
             display: flex;

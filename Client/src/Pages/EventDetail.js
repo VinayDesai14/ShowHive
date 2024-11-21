@@ -6,6 +6,8 @@ import { eventEndpoints } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 import './EventDetail.css';
 import { useSelector } from 'react-redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EventDetail = () => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -88,19 +90,19 @@ const EventDetail = () => {
       });
   
       if (response.status === 200) {
-        alert("Event created successfully");
+        toast.success("Event Created Successfully");
         navigate('/');
         // navigate("/your-events-page"); // Replace with your redirect page
       }
     } catch (error) {
       console.error("Error creating event:", error);
-      alert("Failed to create event. Please try again.");
+      toast.error("Failed to Create Event");
     }
   };
 
   const getCategories = () => {
     switch (selectedCategory) {
-      case 'Music': return ["Hip-Hop and Rap", "Classical", "Bollywood", "Pop", "Folk", "Devotional"];
+      case 'Music': return ["Hip-Hop", "Classical", "Bollywood", "Pop", "Folk", "Devotional"];
       case 'Events': return ["Comedy Shows", "Kids", "Meetups", "Talks", "Screening", "Spirituality", "Award Shows"];
       case 'Plays': return ["Theatre", "Storytelling", "Monologue", "Mime"];
       case 'Sports': return ["Cricket", "Football", "Chess", "Cycling", "Running", "E-Sports", "Martial Arts"];
@@ -159,6 +161,10 @@ const EventDetail = () => {
             autoComplete="off"
             showTimeSelect
             timeFormat="HH:mm"
+            showYearDropdown
+            showMonthDropdown
+            scrollableYearDropdown
+            yearDropdownItemNumber={100} // Adjust this number for the range of years displayed
           />
         </div>
 
@@ -210,6 +216,7 @@ const EventDetail = () => {
           </button>
         </div>
       </div>
+      <ToastContainer/>
     </div>
   );
 };
