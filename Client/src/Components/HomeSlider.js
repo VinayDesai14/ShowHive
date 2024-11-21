@@ -2,6 +2,9 @@ import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import photo from '../assets/ANI-20240121194141.jpg';
 import ExploreMusic from '../assets/exploreMusic.png';
+import ExploreEvents from '../assets/events_medium.jpg';
+import ExplorePlays from '../assets/PLAYS.png';
+import ExploreSports from '../assets/sports-tools_53876-138077.jpg'
 import './HomeSlider.css';
 const HomeSlider = () => {
     return (
@@ -11,7 +14,7 @@ const HomeSlider = () => {
             <a href="/events">
             <img
               className="d-block w-100"
-              src={photo}
+              src={ExploreEvents}
               alt="First slide"
             />
             </a>
@@ -37,7 +40,7 @@ const HomeSlider = () => {
           <a href="/plays">
             <img
               className="d-block w-100"
-              src={photo}
+              src={ExplorePlays}
               alt="Third slide"
             />
             </a>
@@ -52,7 +55,7 @@ const HomeSlider = () => {
           <a href="/sports">
             <img
               className="d-block w-100"
-              src={photo}
+              src={ExploreSports}
               alt="Fourth slide"
             />
             </a>

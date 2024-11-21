@@ -14,26 +14,43 @@ const MusicDetail = () => {
   const [selectedType, setSelectedType] = useState(null); // To track selected music type
 
   useEffect(() => {
-    // Function to fetch music based on selected type/category
-    async function fetchMusic(type) {
+    // Function to fetch events based on category
+    async function fetchEvents(type) {
       try {
         let response;
         if (type) {
-          // Fetch music based on selected type/category
+          // Fetch events based on selected category
           response = await axios.get(`${eventEndpoints.GETALLMUSIC_API}?type=${type}`);
         } else {
-          // Fetch all music by default
+          // Fetch all events by default
           response = await axios.get(eventEndpoints.GETALLMUSIC_API);
         }
-        //console.log(response.data);
-        setMusic(response.data.getAllMusicShows); // Assuming the response structure is the same
+  
+        // Get current time
+        const currentTime = new Date(); // Current time in milliseconds
+  
+        // Debug current time
+        //console.log("Current Timestamp:", currentTime);
+  
+        // Filter events with valid date and time
+        const validEvents = response.data.getAllEvents.filter(event => {
+          //console.log("Event Date and Time :" , event.dateAndTime);
+          const eventDateTime = new Date(event.dateAndTime); // Event time in milliseconds
+          // Debug event time
+          //console.log("Event Timestamp:", eventDateTime);
+  
+          return eventDateTime > currentTime; // Keep only future events
+        });
+  
+        setMusic(validEvents); // Update state with filtered events
+        //console.log("validEvents" , events);
       } catch (error) {
-        console.error('Error fetching music details:', error);
+        console.error('Error fetching events:', error);
       }
     }
-
-    fetchMusic(selectedType); // Fetch music whenever the selected type changes
-  }, [selectedType]); // Re-fetch when the type changes
+  
+    fetchEvents(selectedType); // Call fetch with the selected category
+  }, [selectedType]); // Re-fetch when category changes
 
   // Handler to update the selected music type
   const handleTypeChange = (type) => {
@@ -52,7 +69,7 @@ const MusicDetail = () => {
                 title={music.title}
                 Img={music.imageUrl}
                 Location={music.location}
-                genralSeatPrice={music.genralSeatPrice}
+                generalSeatPrice={music.generalSeatPrice}
                 category="music"
               />
             </Col>

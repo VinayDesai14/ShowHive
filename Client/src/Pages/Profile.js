@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import DatePicker from 'react-datepicker';
 import Card from 'react-bootstrap/Card';
 import 'react-datepicker/dist/react-datepicker.css';
 import './Profile.css';
@@ -8,6 +7,7 @@ import { apiConnector } from '../services/apiConnector';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Slices/profileSlice';
+ import StyledDatePicker from '../services/StyledDatepicker';
 const Profile = () => {
   const [birthDate, setBirthDate] = useState(null);
   const [imageSrc, setImageSrc] = useState(null);
@@ -158,18 +158,10 @@ const Profile = () => {
         </div>
         <div className="eventInput">
           <label>BirthDate:</label>
-          <DatePicker
-            selected={birthDate}
-            onChange={(date) => {
-              setBirthDate(date);
-              setIsUpdated(true);
-            }}
-            onFocus={(e) => e.target.blur()}
-            placeholderText="Select a date"
-            dateFormat="dd/MM/yyyy"
-            showPopperArrow={false}
-            autoComplete="off"
-          />
+          <StyledDatePicker 
+          selectedDate={birthDate}
+          setSelectedDate={setBirthDate}
+        />
         </div>
         <div className="eventInput">
           <label>Gender:</label>

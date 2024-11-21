@@ -14,25 +14,43 @@ const PlaysDetail = () => {
   const [selectedType, setSelectedType] = useState(null); // To track selected play type
 
   useEffect(() => {
-    // Function to fetch plays based on selected type/category
-    async function fetchPlays(type) {
+    // Function to fetch events based on category
+    async function fetchEvents(type) {
       try {
         let response;
         if (type) {
-          // Fetch plays based on selected type/category
+          // Fetch events based on selected category
           response = await axios.get(`${eventEndpoints.GETALLPLAYS_API}?type=${type}`);
         } else {
-          // Fetch all plays by default
+          // Fetch all events by default
           response = await axios.get(eventEndpoints.GETALLPLAYS_API);
         }
-        setPlays(response.data.getAllPlays); // Assuming the response structure is similar
+  
+        // Get current time
+        const currentTime = new Date(); // Current time in milliseconds
+  
+        // Debug current time
+        //console.log("Current Timestamp:", currentTime);
+  
+        // Filter events with valid date and time
+        const validEvents = response.data.getAllEvents.filter(event => {
+          //console.log("Event Date and Time :" , event.dateAndTime);
+          const eventDateTime = new Date(event.dateAndTime); // Event time in milliseconds
+          // Debug event time
+          //console.log("Event Timestamp:", eventDateTime);
+  
+          return eventDateTime > currentTime; // Keep only future events
+        });
+  
+        setPlays(validEvents); // Update state with filtered events
+        //console.log("validEvents" , events);
       } catch (error) {
-        console.error('Error fetching plays:', error);
+        console.error('Error fetching events:', error);
       }
     }
-
-    fetchPlays(selectedType); // Fetch plays whenever the selected type changes
-  }, [selectedType]); // Re-fetch when the type changes
+  
+    fetchEvents(selectedType); // Call fetch with the selected category
+  }, [selectedType]); // Re-fetch when category changes
 
   // Handler to update the selected play type
   const handleTypeChange = (type) => {
@@ -51,7 +69,7 @@ const PlaysDetail = () => {
                 title={play.title}
                 Img={play.imageUrl}
                 Location={play.location}
-                genralSeatPrice={play.genralSeatPrice}
+                generalSeatPrice={play.generalSeatPrice}
                 category="plays"
               />
             </Col>

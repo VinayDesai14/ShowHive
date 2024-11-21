@@ -21,19 +21,37 @@ const EventDetails = () => {
         if (type) {
           // Fetch events based on selected category
           response = await axios.get(`${eventEndpoints.GETALLEVENTS_API}?type=${type}`);
-      
         } else {
           // Fetch all events by default
           response = await axios.get(eventEndpoints.GETALLEVENTS_API);
         }
-        setEvents(response.data.getAllEvents);
+  
+        // Get current time
+        const currentTime = new Date(); // Current time in milliseconds
+  
+        // Debug current time
+        //console.log("Current Timestamp:", currentTime);
+  
+        // Filter events with valid date and time
+        const validEvents = response.data.getAllEvents.filter(event => {
+          //console.log("Event Date and Time :" , event.dateAndTime);
+          const eventDateTime = new Date(event.dateAndTime); // Event time in milliseconds
+          // Debug event time
+          //console.log("Event Timestamp:", eventDateTime);
+  
+          return eventDateTime > currentTime; // Keep only future events
+        });
+  
+        setEvents(validEvents); // Update state with filtered events
+        //console.log("validEvents" , events);
       } catch (error) {
         console.error('Error fetching events:', error);
       }
     }
-
+  
     fetchEvents(selectedType); // Call fetch with the selected category
   }, [selectedType]); // Re-fetch when category changes
+  
 
   // Handler to update selected category
   const handleTypeChange = (type) => {
