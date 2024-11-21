@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import BookedTicket from '../Components/BookedTicket';
 import MySalesTicket from '../Components/MySalesTicket';
-
+import './MyEvent.css'
 const MyTabs = () => {
   const [activeTab, setActiveTab] = useState("booked tickets");
 
@@ -11,6 +11,7 @@ const MyTabs = () => {
   };
 
   return (
+    <div className='tabCont'>
     <Tabs
       activeKey={activeTab}
       onSelect={handleSelect}
@@ -24,6 +25,7 @@ const MyTabs = () => {
         {activeTab === "sales" && <MySalesTicket />}
       </Tab>
     </Tabs>
+    </div>
   );
 };
 

@@ -8,27 +8,67 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../Slices/profileSlice';
  import StyledDatePicker from '../services/StyledDatepicker';
+import { updateDisplayPicture } from '../services/SettingsAPI';
+import { updateProfile } from '../services/SettingsAPI';
 const Profile = () => {
   const [birthDate, setBirthDate] = useState(null);
-  const [imageSrc, setImageSrc] = useState(null);
+  const [imageFile, setImageFile] = useState(null);
+  const [previewSource, setPreviewSource] = useState(null);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [gender, setGender] = useState('');
   const [maritalStatus, setMaritalStatus] = useState('');
-  const [isUpdated, setIsUpdated] = useState(false); // Track if any field is updated
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [isImageUpdated, setIsImageUpdated] = useState(false); // Track if any field is updated
   const { token } = useSelector((state) => state.auth);
   let { user } = useSelector((state) => state.profile);
   const dispatch = useDispatch();
   // Handle image upload
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
+  // const handleImageUpload = (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       setImageSrc(e.target.result);
+  //       setIsUpdated(true); // Mark as updated
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // };
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setPreviewSource(reader.result);
+    };
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    // console.log(file)
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImageSrc(e.target.result);
-        setIsUpdated(true); // Mark as updated
-      };
-      reader.readAsDataURL(file);
+      setIsImageUpdated(true);
+      setImageFile(file);
+      previewFile(file);
+    }
+  };
+
+  const handleFileUpload = () => {
+    try {
+      console.log("uploading...");
+      // setLoading(true);
+      const id=user._id;
+      const formData = new FormData();
+      formData.append("displayPicture", imageFile);
+      formData.append("id", id);
+      console.log("formdata", formData)
+      // dispatch(updateDisplayPicture(token, formData))
+      dispatch(updateDisplayPicture(token, formData)).then(() => {
+        // setLoading(false);
+        setIsImageUpdated(false);
+      });
+    } catch (error) {
+      console.log("ERROR MESSAGE - ", error.message);
     }
   };
   // useEffect(async ()=>{
@@ -49,9 +89,11 @@ const Profile = () => {
     setter(event.target.value);
     setIsUpdated(true);
   };
-  useEffect(()=>{
-
-  },[])
+  useEffect(() => {
+    if (imageFile) {
+      previewFile(imageFile);
+    }
+  }, [imageFile]);
   // Save data to the backend
   const handleSave = async () => {
     const id=user._id
@@ -61,42 +103,52 @@ const Profile = () => {
       birthDate,
       gender,
       maritalStatus,
-      imageSrc,
       id
     };
-
     try {
-      const response=await apiConnector("PUT", profileEndpoints.UPDATE_PROFILE_API, JSON.stringify(data), {
-        "Content-Type": 'application/json',
-        Authorization: `Bearer ${token}`,
-      }, null, false);
-      // const response = await fetch('YOUR_BACKEND_ENDPOINT', {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(data),
-      // });
-      setIsUpdated(false); // Reset the update status
-        console.log('response data ',response.data);
-        
-        setBirthDate(null);
-        setImageSrc(null);
+      dispatch(updateProfile(token, data));
+    } catch (error) {
+      console.log("ERROR MESSAGE - ", error.message);
+    }
+    setBirthDate(null);
+        // setImageSrc(null);
         setFirstName('');
         setLastName('');
         setMaritalStatus('');
         setGender('');
-      // if (response.ok) {
-      //   // Handle successful save
-      //   console.log('Data saved successfully');
+        setIsUpdated(false);
+    // try {
+    //   const response=await apiConnector("PUT", profileEndpoints.UPDATE_PROFILE_API, JSON.stringify(data), {
+    //     "Content-Type": 'application/json',
+    //     Authorization: `Bearer ${token}`,
+    //   }, null, false);
+    //   // const response = await fetch('YOUR_BACKEND_ENDPOINT', {
+    //   //   method: 'POST',
+    //   //   headers: {
+    //   //     'Content-Type': 'application/json',
+    //   //   },
+    //   //   body: JSON.stringify(data),
+    //   // });
+    //   setIsUpdated(false); // Reset the update status
+    //     console.log('response data ',response.data);
         
-      // } else {
-      //   // Handle save error
-      //   console.error('Error saving data');
-      // }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    //     setBirthDate(null);
+    //     // setImageSrc(null);
+    //     setFirstName('');
+    //     setLastName('');
+    //     setMaritalStatus('');
+    //     setGender('');
+    //   // if (response.ok) {
+    //   //   // Handle successful save
+    //   //   console.log('Data saved successfully');
+        
+    //   // } else {
+    //   //   // Handle save error
+    //   //   console.error('Error saving data');
+    //   // }
+    // } catch (error) {
+    //   console.error('Error:', error);
+    // }
   };
 
   return (
@@ -109,7 +161,7 @@ const Profile = () => {
                 <Card.Img
                   className="profileImage"
                   variant="top"
-                  src={imageSrc || user.image || 'https://via.placeholder.com/150'}
+                  src={previewSource || user?.image || 'https://via.placeholder.com/150'}
                   alt="User Photo"
                 />
                 <input
@@ -117,22 +169,32 @@ const Profile = () => {
                   id="upload-input"
                   style={{ display: 'none' }}
                   accept="image/*"
-                  onChange={handleImageUpload}
+                  onChange={handleFileChange}
                 />
               </label>
             </Card.Body>
           </Card>
-          <div>
+          <div className='textSide'>
           <h1>
   Hi,{' '}
-  {user.firstName || user.lastName
-    ? `${user.firstName || ''} ${user.lastName || ''}`.trim()
+  {user.profileDetails.firstName || user.profileDetails.lastName
+    ? `${user.profileDetails.firstName || ''} ${user.profileDetails.lastName || ''}`.trim()
     : 'Guest'}
 </h1>
+<h3>Welcome to ShowHive!</h3>
 </div>
-          <h4>Welcome to ShowHive!</h4>
+          
         </div>
-        <p>Email Address: {user.email}</p>
+        <div className='emailAdd'>
+          <h4>Email Address: {user.email}</h4>
+        </div>
+        {isImageUpdated && (
+          <div className='saveDiv'>
+        <button className="save-btn" onClick={handleFileUpload}>
+          Save
+        </button>
+        </div>
+      )}
       </div>
       <div className="eventDetails">
         <h3>Personal Details</h3>

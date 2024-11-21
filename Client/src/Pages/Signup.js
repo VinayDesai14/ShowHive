@@ -216,15 +216,15 @@ const Signup = () => {
 
     return (
         <>
-            <Button className='btn-custom' variant="light" onClick={() => setModalShow(true)}>
+            <Button className='btn-custom' variant="light" onClick={() => setEmailModalShow(true)}>
                 Signup
             </Button>
 
-            <MyVerticallyCenteredModal
+            {/* <MyVerticallyCenteredModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 onEmailClick={handleEmailClick}
-            />
+            /> */}
 
             <EmailModal
                 show={emailModalShow}
