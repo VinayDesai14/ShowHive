@@ -38,7 +38,7 @@ exports.SignUp= async (req,res)=>{
 				{ email: user.email, id: user._id},
 				process.env.JWT_SECRET,
 				{
-					expiresIn: "7d",
+					expiresIn: "1d",
 				}
 			);
 			// console.log('token created-> ',token);
@@ -62,7 +62,9 @@ exports.SignUp= async (req,res)=>{
 			email,
 			profileDetails: profileDetails._id,
 			image: `https://api.dicebear.com/5.x/initials/svg?seed=${profileDetails.firstName || 'Anonymous'}&${profileDetails.lastName || 'User'}`,
-		})?.populate("profileDetails").exec();
+		});
+
+		user = await user.populate("profileDetails");
 
 		const token = jwt.sign(
 			{ email: user.email, id: user._id},
